@@ -1,4 +1,4 @@
-package serverSide;
+package commInfra;
 
 import genclass.GenericIO;
 import java.io.*;
