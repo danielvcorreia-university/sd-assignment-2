@@ -3,23 +3,27 @@ package commInfra;
 import java.io.Serializable;
 
 /**
+ *
+ *   Internal structure of the exchanged messages.
+ *
  * Represents a message that is going to be sent between regions.
- * The class is serializable, and has constructors to every kind
- * of message needed. Also has getters to get the values from the fields.
+ * The class is serializable, and has getters to get the values from the fields.
+ * Communication is based on a communication channel under the TCP protocol.
+ *
  * @author Daniel Vala Correia
  * @author Alexandre Abreu
  */
 public class Message implements Serializable {
 
     /**
-     * Serial version of the class.
+     * Serialization key.
      */
     private static final long serialVersionUID = 2021L;
 
     /**
-     * Type of the message.
+     * Message type.
      */
-    private MessageType type;
+    private int type;
 
     /**
      * Pilot identification.
@@ -144,7 +148,7 @@ public class Message implements Serializable {
      *
      * @param type message type
      */
-    public Message(MessageType type){
+    public Message(int type){
         this.type = type;
         this.parametersSize = 0;
         this.returnAttributesSize = 0;
@@ -165,7 +169,7 @@ public class Message implements Serializable {
      *
      * @return type
      */
-    public MessageType getType() {
+    public int getType() {
         return type;
     }
 
