@@ -13,141 +13,82 @@ import java.io.Serializable;
  * @author Daniel Vala Correia
  * @author Alexandre Abreu
  */
+
 public class Message implements Serializable {
 
     /**
      * Serialization key.
      */
+
     private static final long serialVersionUID = 2021L;
 
     /**
      * Message type.
      */
+
     private int type;
-
-    /**
-     * Pilot identification.
-     */
-    private int pilotId;
-
-    /**
-     * Hostess identification.
-     */
-    private int hostessId;
-
-    /**
-     * Passenger identification.
-     */
-    private int passengerId;
-
-    /**
-     * Pilot state.
-     */
-    private int pilotState;
-
-    /**
-     * Hostess state.
-     */
-    private int hostessState;
-
-    /**
-     * Passenger state.
-     */
-    private int passengerState;
-
-    /**
-     * Number of passengers in queue waiting for to show their documents to the hostess.
-     */
-    private int inQ;
-
-    /**
-     * True if the passenger has been called by the hostess to show his documents.
-     */
-    private boolean readyToShowDocuments;
-
-    /**
-     * Count number of passengers on the plane.
-     */
-    private int hostessCount;
-
-    /**
-     * Count number of passengers checked by hostess.
-     */
-    private int checkedPassengers;
-
-    /**
-     * True if the passenger has given his documents to the hostess for her to check.
-     */
-    private boolean readyToCheckDocuments;
-
-    /**
-     * True if the hostess can check next passenger documents.
-     */
-    private boolean readyForNextPassenger;
-
-    /**
-     * Reference to number of passengers in the plane.
-     */
-    private int inF;
-
-    /**
-     * True if the plane is ready to take off.
-     */
-    private boolean readyToTakeOff;
 
     /**
      * Size of Parameters to be sent.
      */
+
     private int parametersSize;
 
     /**
      * Size of Returned attributes.
      */
+
     private int returnAttributesSize;
 
     /**
      * Describes the parameters types.
      */
+
     private int[] parametersType = {};
 
     /**
      * Parameters field.
      */
+
     private Object[] parameters = {};
 
     /**
      * Describes the attributes types.
      */
+
     private int[] returnAttributesType = {};
 
     /**
      * Attributes field.
      */
+
     private Object[] returnAttributes = {};
 
     /**
      * Return type field.
      */
+
     private int returnType;
 
     /**
      * Return field.
      */
+
     private Object returnField = null;
 
     /**
      * Empty constructor for the message that initializes the default
      * values for all the variables.
      */
-    public Message(){
 
-    }
+    public Message(){ }
 
     /**
      * Message instantiation.
      *
      * @param type message type
      */
+
     public Message(int type){
         this.type = type;
         this.parametersSize = 0;
@@ -156,190 +97,174 @@ public class Message implements Serializable {
     }
 
     /**
-     * Get parameter serialVersionUID.
+     * Get message type.
      *
-     * @return serialVersionUID
+     * @return message type
      */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
-    /**
-     * Get parameter type.
-     *
-     * @return type
-     */
     public int getType() {
         return type;
     }
 
     /**
-     * Get parameter pilotID.
+     * Set message type.
      *
-     * @return pilotID
+     * @param type message type
      */
-    public int getPilotId() {
-        return pilotId;
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     /**
-     * Get parameter hostessId.
+     * Get parameters size.
      *
-     * @return hostessId
+     * @return parameters size
      */
-    public int getHostessId() {
-        return hostessId;
-    }
-
-    /**
-     * Get parameter passengerId.
-     *
-     * @return passengerId
-     */
-    public int getPassengerId() {
-        return passengerId;
-    }
-
-    /**
-     * Get parameter pilotState.
-     *
-     * @return pilotState
-     */
-    public int getPilotState() {
-        return pilotState;
-    }
-
-    /**
-     * Get parameter hostessState.
-     *
-     * @return hostessState
-     */
-    public int getHostessState() {
-        return hostessState;
-    }
-
-    /**
-     * Get parameter passengerState.
-     *
-     * @return passengerState
-     */
-    public int getPassengerState() {
-        return passengerState;
-    }
-
-    /**
-     * Get parameter readyToShowDocuments.
-     *
-     * @return readyToShowDocuments
-     */
-    public boolean isReadyToShowDocuments() {
-        return readyToShowDocuments;
-    }
-
-    /**
-     * Get parameter hostessCount.
-     *
-     * @return hostessCount
-     */
-    public int getHostessCount() {
-        return hostessCount;
-    }
-
-    /**
-     * Get parameter checkedPassengers.
-     *
-     * @return checkedPassengers
-     */
-    public int getCheckedPassengers() {
-        return checkedPassengers;
-    }
-
-    /**
-     * Get parameter readyToCheckDocuments.
-     *
-     * @return readyToCheckDocuments
-     */
-    public boolean isReadyToCheckDocuments() {
-        return readyToCheckDocuments;
-    }
-
-    /**
-     * Get parameter readyForNextPassenger.
-     *
-     * @return readyForNextPassenger
-     */
-    public boolean isReadyForNextPassenger() {
-        return readyForNextPassenger;
-    }
-
-    /**
-     * Get parameter readyToTakeOff.
-     *
-     * @return readyToTakeOff
-     */
-    public boolean isReadyToTakeOff() {
-        return readyToTakeOff;
-    }
 
     public int getParametersSize() {
         return parametersSize;
     }
 
-    public int getReturnAttributesSize() {
-        return returnAttributesSize;
-    }
-
-    public int[] getParametersType() {
-        return parametersType;
-    }
-
-    public Object[] getParameters() {
-        return parameters;
-    }
-
-    public int[] getReturnAttributesType() {
-        return returnAttributesType;
-    }
-
-    public Object[] getReturnAttributes() {
-        return returnAttributes;
-    }
-
-    public int getReturnType() {
-        return returnType;
-    }
-
-    public Object getReturnField() {
-        return returnField;
-    }
+    /**
+     * Set parameters size.
+     *
+     * @param parametersSize parameters size.
+     */
 
     public void setParametersSize(int parametersSize) {
         this.parametersSize = parametersSize;
     }
 
+    /**
+     * Get returned attributes from server size.
+     *
+     * @return attributes size
+     */
+
+    public int getReturnAttributesSize() {
+        return returnAttributesSize;
+    }
+
+    /**
+     * Set returned attributes size.
+     *
+     * @param returnAttributesSize returned attributes size.
+     */
+
     public void setReturnAttributesSize(int returnAttributesSize) {
         this.returnAttributesSize = returnAttributesSize;
+    }
+
+    /**
+     * Get parameters type.
+     *
+     * @return parameters type
+     */
+
+    public int[] getParametersType() {
+        return parametersType;
     }
 
     public void setParametersType(int[] parametersType) {
         this.parametersType = parametersType;
     }
 
+    /**
+     * Get parameters objects.
+     *
+     * @return parameters objects
+     */
+
+    public Object[] getParameters() {
+        return parameters;
+    }
+
+    /**
+     * Set parameters type.
+     *
+     * @param parameters parameters type
+     */
+
     public void setParameters(Object[] parameters) {
         this.parameters = parameters;
     }
+
+    /**
+     * Get returned attributes from server type.
+     *
+     * @return attributes type
+     */
+
+    public int[] getReturnAttributesType() {
+        return returnAttributesType;
+    }
+
+    /**
+     * Set returned attributes type.
+     *
+     * @param returnAttributesType returned attributes type
+     */
 
     public void setReturnAttributesType(int[] returnAttributesType) {
         this.returnAttributesType = returnAttributesType;
     }
 
+    /**
+     * Get returned attributes from server object.
+     *
+     * @return returned attributes object
+     */
+
+    public Object[] getReturnAttributes() {
+        return returnAttributes;
+    }
+
+    /**
+     * Set returned attributes.
+     *
+     * @param returnAttributes returned attributes size
+     */
+
     public void setReturnAttributes(Object[] returnAttributes) {
         this.returnAttributes = returnAttributes;
     }
 
+    /**
+     * Get return type.
+     *
+     * @return return type
+     */
+
+    public int getReturnType() {
+        return returnType;
+    }
+
+    /**
+     * Set return type.
+     *
+     * @param returnType return type
+     */
+
     public void setReturnType(int returnType) {
         this.returnType = returnType;
     }
+
+    /**
+     * Get return field.
+     *
+     * @return return field
+     */
+
+    public Object getReturnField() {
+        return returnField;
+    }
+
+    /**
+     * Set return field.
+     *
+     * @param returnField return field
+     */
 
     public void setReturnField(Object returnField) {
         this.returnField = returnField;
