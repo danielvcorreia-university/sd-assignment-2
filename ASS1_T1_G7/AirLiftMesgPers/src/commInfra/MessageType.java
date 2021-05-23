@@ -3,7 +3,6 @@ package commInfra;
 /**
  * Message Types
  */
-
 public enum MessageType {
     GET_INQ,
     PREPARE_FOR_PASS_BOARDING,
