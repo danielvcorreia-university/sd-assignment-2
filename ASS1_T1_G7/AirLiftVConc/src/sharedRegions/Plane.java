@@ -72,26 +72,6 @@ public class Plane {
     }
 
     /**
-     * Get number of passengers in flight.
-     *
-     * @return inF
-     */
-
-    public static int getInF() {
-        return inF;
-    }
-
-    /**
-     * Set number of passengers in flight.
-     * @param n set number of passengers in flight
-     *
-     */
-
-    public static void setInF(int n) {
-       inF = n;
-    }
-
-    /**
      * Operation to report the final report
      * <p>
      * It is called by the pilot after he parks the plane at the transfer gate and there are no more passengers to transport
@@ -102,9 +82,9 @@ public class Plane {
     }
 
     /**
-     * Operation prepare for pass boarding
+     * Operation park at transfer gate
      * <p>
-     * It is called by the hostess while waiting for passengers to arrive at the airport.
+     * It is called by the pilot after he arrived at departure airport.
      */
 
     public synchronized void parkAtTransferGate() {
@@ -112,7 +92,6 @@ public class Plane {
         pilot = (Pilot) Thread.currentThread();
         ((Pilot) Thread.currentThread()).setPilotState(PilotStates.AT_TRANSFER_GATE);
         repos.setPilotState(((Pilot) Thread.currentThread()).getPilotState());
-        //if (DestinationAirport.getPTAL() == SimulPar.N) { repos.reportFinalInfo(); }
     }
 
     /**
@@ -121,13 +100,8 @@ public class Plane {
      * It is called by the pilot to inform the hostess that the plane is ready for boarding.
      */
 
-
     public synchronized void informPlaneReadyForBoarding() {
 
-        //while (hostess == null) {
-        //    System.out.println("Hostess is not initialized");
-        //}
-        //hostess.setReadyForNextFlight(true);*/
         nextFlight = true;
         ((Pilot) Thread.currentThread()).setPilotState(PilotStates.READY_FOR_BOARDING);
         repos.setPilotState(((Pilot) Thread.currentThread()).getPilotState());
@@ -152,7 +126,6 @@ public class Plane {
         hostess.setCheckedPassengers(hostess.getCheckedPassengers() + inF);
 
         if (!(hostess.getCheckedPassengers() == SimulPar.N)) {
-            // while (!(((Hostess) Thread.currentThread()).getReadyForNextFlight()))          // the hostess waits for pilot signal
             while(!nextFlight)
             {
                 try {
@@ -163,7 +136,6 @@ public class Plane {
                 }
             }
         }
-        //((Hostess) Thread.currentThread()).setReadyForNextFlight(false);
         nextFlight = false;
 
     }

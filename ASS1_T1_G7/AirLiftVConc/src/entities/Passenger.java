@@ -143,10 +143,8 @@ public class Passenger extends Thread {
         depAirport.waitInQueue();
         depAirport.showDocuments();
         depAirport.boardThePlane();
-        //plane.setInF(Plane.getInF()+1);
         plane.waitForEndOfFlight();
         plane.leaveThePlane();             //see you later aligator
-        destAirport.incPTAL();
     }
 
     /**

@@ -130,19 +130,7 @@ public class GeneralRepos {
     }
 
     /**
-     * Set Info of the flight.
-     *
-     * @param nVoo number of the flight since the begin.
-     * @param npassageiros number of passengers a board.
-     */
-
-    public synchronized void setInfoVoo(int nVoo, int npassageiros) {
-        this.ndoVoo = nVoo;
-        informacaoDosVoos[nVoo-1] = nVoo + ":" + npassageiros;
-    }
-
-    /**
-     * Inicial status of the General Repository
+     * Initial status of the General Repository
      *
      */
 
@@ -223,10 +211,6 @@ public class GeneralRepos {
                 break;
             case HostessStates.CHECK_PASSENGER:
                 lineStatus += "CKPS ";
-                if (hostessAnteriorState == HostessStates.WAIT_FOR_PASSENGER) {
-                    //InQ--;
-
-                }
                 hostessAnteriorState = HostessStates.CHECK_PASSENGER;
                 break;
             case HostessStates.READY_TO_FLY:

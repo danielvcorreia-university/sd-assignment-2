@@ -1,13 +1,5 @@
 package sharedRegions;
 
-import commInfra.MemException;
-import commInfra.MemFIFO;
-import entities.Hostess;
-import entities.Passenger;
-import entities.Pilot;
-import genclass.GenericIO;
-import main.SimulPar;
-
 /**
  *    Destination Airport.
  *
@@ -18,11 +10,6 @@ import main.SimulPar;
  */
 
 public class DestinationAirport {
-    /**
-     * Number of passengers that have arrived at the destination and have left the plane.
-     */
-
-    private int PTAL;
 
     /**
      * Reference to the general repository.
@@ -36,26 +23,6 @@ public class DestinationAirport {
      * @param repos reference to the general repository
      */
 
-    public DestinationAirport(GeneralRepos repos) {
-        PTAL = 0;
-        this.repos = repos;
-    }
+    public DestinationAirport(GeneralRepos repos) { this.repos = repos; }
 
-    /**
-     * Get number of passengers in destination.
-     *
-     * @return PTAL
-     */
-
-    public int getPTAL() {
-        return PTAL;
-    }
-
-    /**
-     * Set number of passengers in destination by one.
-     */
-
-    public void incPTAL() {
-        PTAL += 1;
-    }
 }

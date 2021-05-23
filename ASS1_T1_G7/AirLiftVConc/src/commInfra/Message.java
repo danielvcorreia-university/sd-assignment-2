@@ -228,15 +228,6 @@ public class Message implements Serializable {
     }
 
     /**
-     * Get parameter InQ.
-     *
-     * @return InQ
-     */
-    public int getInQ() {
-        return inQ;
-    }
-
-    /**
      * Get parameter readyToShowDocuments.
      *
      * @return readyToShowDocuments
@@ -279,15 +270,6 @@ public class Message implements Serializable {
      */
     public boolean isReadyForNextPassenger() {
         return readyForNextPassenger;
-    }
-
-    /**
-     * Get parameter InF.
-     *
-     * @return InF
-     */
-    public int getInF() {
-        return inF;
     }
 
     /**

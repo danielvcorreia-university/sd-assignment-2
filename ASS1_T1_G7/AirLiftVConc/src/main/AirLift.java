@@ -25,7 +25,7 @@ public class AirLift {
      */
 
     public static void main(String[] args) {
-        Passenger[] passenger = new Passenger[SimulPar.N];     // array of passenger threads
+        Passenger[] passenger = new Passenger[SimulPar.N];      // array of passenger threads
         Pilot pilot;                                            // pilot thread
         Hostess hostess;                                        // reference to the barber shop
         DepartureAirport depAirport;                            // reference to the departure airport repository

@@ -80,14 +80,6 @@ public class DepartureAirport {
     }
 
     /**
-     * Get number of passengers in queue.
-     *
-     * @return inQ
-     */
-
-    public int getInQ() { return inQ; }
-
-    /**
      * Operation queue empty
      * <p>
      * It is called to check if the passenger queue is currently empty
@@ -241,7 +233,6 @@ public class DepartureAirport {
         notifyAll();
         while ((inQ == 0 && hostess.getHostessCount() < 5 || (!((Hostess) Thread.currentThread()).getReadyForNextPassenger())) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
         {
-            //Plane.getInF()
             try {
                 wait();
             } catch (InterruptedException e) {
