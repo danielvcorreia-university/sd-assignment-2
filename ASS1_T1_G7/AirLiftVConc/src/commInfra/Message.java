@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- *   Internal structure of the exchanged messages.
+ * Internal structure of the exchanged messages.
  *
  * Represents a message that is going to be sent between regions.
  * The class is serializable, and has getters to get the values from the fields.
