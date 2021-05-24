@@ -26,9 +26,9 @@ public class HostessMain {
         /* getting information about the servers locations */
 
         String hostName = "localhost";      // name of the platform where is located the pilot server
-        int depAirportPortNumb = 50000;     // number of the listening port at the computational system where the Departure Airport server is located
-        int planePortNumb = 50001;          // number of the listening port at the computational system where the Plane server is located
-        int desAirportPortNumb = 50002;     // number of the listening port at the computational system where the Destination Airport server is located
+        int depAirportPortNumb = 22160;     // number of the listening port at the computational system where the Departure Airport server is located
+        int planePortNumb = 22161;          // number of the listening port at the computational system where the Plane server is located
+        int desAirportPortNumb = 22162;     // number of the listening port at the computational system where the Destination Airport server is located
 
         /* message exchange */
 
