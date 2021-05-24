@@ -4,8 +4,6 @@ package commInfra;
  * Definition of the different message Types
  * exchanged between the clients and the servers
  *
- *  * @author Daniel Vala Correia
- *  * @author Alexandre Abreu
  */
 
 public class MessageType

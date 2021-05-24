@@ -10,8 +10,6 @@ import java.io.Serializable;
  * The class is serializable, and has getters to get the values from the fields.
  * Communication is based on a communication channel under the TCP protocol.
  *
- * @author Daniel Vala Correia
- * @author Alexandre Abreu
  */
 
 public class Message implements Serializable {
@@ -38,7 +36,7 @@ public class Message implements Serializable {
      * Size of Returned attributes.
      */
 
-    private int returnAttributesSize;
+    private int attributesSize;
 
     /**
      * Describes the parameters types.
@@ -56,13 +54,13 @@ public class Message implements Serializable {
      * Describes the attributes types.
      */
 
-    private int[] returnAttributesType = {};
+    private int[] attributesType = {};
 
     /**
      * Attributes field.
      */
 
-    private Object[] returnAttributes = {};
+    private Object[] attributes = {};
 
     /**
      * Return type field.
@@ -92,7 +90,7 @@ public class Message implements Serializable {
     public Message(int type){
         this.type = type;
         this.parametersSize = 0;
-        this.returnAttributesSize = 0;
+        this.attributesSize = 0;
         this.returnType = AttributeTypes.NONE;
     }
 
@@ -137,23 +135,23 @@ public class Message implements Serializable {
     }
 
     /**
-     * Get returned attributes from server size.
+     * Get attributes size.
      *
      * @return attributes size
      */
 
-    public int getReturnAttributesSize() {
-        return returnAttributesSize;
+    public int getAttributesSize() {
+        return attributesSize;
     }
 
     /**
-     * Set returned attributes size.
+     * Set attributes size.
      *
-     * @param returnAttributesSize returned attributes size.
+     * @param attributesSize attributes size.
      */
 
-    public void setReturnAttributesSize(int returnAttributesSize) {
-        this.returnAttributesSize = returnAttributesSize;
+    public void setAttributesSize(int attributesSize) {
+        this.attributesSize = attributesSize;
     }
 
     /**
@@ -191,43 +189,43 @@ public class Message implements Serializable {
     }
 
     /**
-     * Get returned attributes from server type.
+     * Get attributes type.
      *
      * @return attributes type
      */
 
-    public int[] getReturnAttributesType() {
-        return returnAttributesType;
+    public int[] getAttributesType() {
+        return attributesType;
     }
 
     /**
-     * Set returned attributes type.
+     * Set attributes type.
      *
-     * @param returnAttributesType returned attributes type
+     * @param attributesType attributes type
      */
 
-    public void setReturnAttributesType(int[] returnAttributesType) {
-        this.returnAttributesType = returnAttributesType;
+    public void setAttributesType(int[] attributesType) {
+        this.attributesType = attributesType;
     }
 
     /**
-     * Get returned attributes from server object.
+     * Get attributes object.
      *
-     * @return returned attributes object
+     * @return attributes object
      */
 
-    public Object[] getReturnAttributes() {
-        return returnAttributes;
+    public Object[] getAttributes() {
+        return attributes;
     }
 
     /**
-     * Set returned attributes.
+     * Set attributes.
      *
-     * @param returnAttributes returned attributes size
+     * @param attributes attributes size
      */
 
-    public void setReturnAttributes(Object[] returnAttributes) {
-        this.returnAttributes = returnAttributes;
+    public void setAttributes(Object[] attributes) {
+        this.attributes = attributes;
     }
 
     /**
