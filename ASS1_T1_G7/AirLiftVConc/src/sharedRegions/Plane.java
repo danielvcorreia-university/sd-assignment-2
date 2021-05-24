@@ -205,7 +205,7 @@ public class Plane {
     /**
      * Operation inform the pilot that the plane is ready to departure.
      * <p>
-     * It is called by the hostess when she ended the check in of the passengers.
+     * It is called by the pilot when he arrived at destination airport.
      */
 
     public synchronized void announceArrival() {

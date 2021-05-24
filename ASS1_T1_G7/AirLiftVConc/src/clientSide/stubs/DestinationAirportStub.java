@@ -1,5 +1,10 @@
 package clientSide.stubs;
 
+import commInfra.ClientCom;
+import commInfra.Message;
+import commInfra.MessageType;
+import genclass.GenericIO;
+
 /**
  * Stub to the destination airport.
  *
@@ -35,4 +40,35 @@ public class DestinationAirportStub {
         this.serverPortNumb = serverPortNumb;
     }
 
+    /**
+     *   Operation server shutdown.
+     *
+     *   New operation.
+     */
+
+    public void shutdown ()
+    {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
+
+        com = new ClientCom (serverHostName, serverPortNumb);
+        while (!com.open ())    // waits for a connection to be established
+        { try
+        { Thread.sleep ((long) (1000));
+        }
+        catch (InterruptedException e) {}
+        }
+        outMessage = new Message (MessageType.SHUT);
+        com.writeObject (outMessage);
+        inMessage = (Message) com.readObject ();
+
+        if (inMessage.getType() != MessageType.SHUTDONE)
+        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+            GenericIO.writelnString (inMessage.toString ());
+            System.exit (1);
+        }
+
+        com.close ();
+    }
 }

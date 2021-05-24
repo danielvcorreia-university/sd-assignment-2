@@ -52,7 +52,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void prepareForPassBoarding() {
+    public void prepareForPassBoarding() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
@@ -100,7 +100,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void waitInQueue() {
+    public void waitInQueue() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
@@ -150,7 +150,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void checkDocuments() {
+    public void checkDocuments() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
@@ -201,7 +201,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void  showDocuments() {
+    public void  showDocuments() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
@@ -238,7 +238,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void waitForNextPassenger() {
+    public void waitForNextPassenger() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
@@ -291,7 +291,7 @@ public class DepartureAirportStub {
      *
      */
 
-    public synchronized void boardThePlane() {
+    public void boardThePlane() {
         ClientCom com;      // communication channel
         Message outMessage, // outgoing message
                 inMessage;  // incoming message
