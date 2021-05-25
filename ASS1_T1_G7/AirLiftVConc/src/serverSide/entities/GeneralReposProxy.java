@@ -40,7 +40,7 @@ public class GeneralReposProxy extends Thread
 
     public GeneralReposProxy (ServerCom sconi, GeneralReposInterface reposInter)
     {
-        super ("GeneralReposProxy_" + GeneralReposProxy.getProxyId ());
+        //super ("GeneralReposProxy_" + GeneralReposProxy.getProxyId ());
         this.sconi = sconi;
         this.reposInter = reposInter;
     }

@@ -166,7 +166,6 @@ public class DepartureAirport {
 
         inQ--;
         hostess.setPassengerInQueue(!queueEmpty());
-
         try {
             passengerId = boardingQueue.read();                            // the hostess calls the customer
             if ((passengerId < 0) || (passengerId >= SimulPar.N))

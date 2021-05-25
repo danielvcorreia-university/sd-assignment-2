@@ -71,7 +71,7 @@ public class PlaneProxy extends Thread implements PilotInterface , HostessInterf
      * True if the plane is ready to take off.
      */
 
-    private boolean readyToTakeOff;
+    private boolean readyToTakeOff = false;
 
     /**
      * Hostess identification.
@@ -83,37 +83,37 @@ public class PlaneProxy extends Thread implements PilotInterface , HostessInterf
      * Count number of passengers on the plane.
      */
 
-    private int hostessCount;
+    private int hostessCount = 0;
 
     /**
      * Count number of passengers checked by hostess.
      */
 
-    private int checkedPassengers;
+    private int checkedPassengers = 0;
 
     /**
      * True if there is any passenger in queue for the hostess to process.
      */
 
-    private boolean passengerInQueue;
+    private boolean passengerInQueue = false;
 
     /**
      * True if the hostess can check next passenger documents.
      */
 
-    private boolean readyForNextPassenger;
+    private boolean readyForNextPassenger = false;
 
     /**
      * True if the passenger has given his documents to the hostess for her to check.
      */
 
-    private boolean readyToCheckDocuments;
+    private boolean readyToCheckDocuments = false;
 
     /**
      * True if the passenger has been called by the hostess to show his documents.
      */
 
-    private boolean readyToShowDocuments;
+    private boolean readyToShowDocuments = false;
 
     /**
      *  Instantiation of a client proxy.
@@ -124,7 +124,7 @@ public class PlaneProxy extends Thread implements PilotInterface , HostessInterf
 
     public PlaneProxy (ServerCom sconi, PlaneInterface planeInterface)
     {
-        super ("PlaneProxy_" + PlaneProxy.getProxyId ());
+        //super ("PlaneProxy_" + PlaneProxy.getProxyId ());
         this.sconi = sconi;
         this.planeInterface = planeInterface;
     }

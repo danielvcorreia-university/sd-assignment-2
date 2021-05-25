@@ -274,7 +274,7 @@ public class PlaneStub {
 
         com.close ();
         ((Pilot) Thread.currentThread ()).setPilotState ((int) inMessage.getAttributes()[0]);
-        ((Pilot) Thread.currentThread ()).setReadyToTakeOff ((boolean) inMessage.getAttributes()[1]);
+        ((Pilot) Thread.currentThread ()).setReadyToTakeOff (false);
     }
 
     /**

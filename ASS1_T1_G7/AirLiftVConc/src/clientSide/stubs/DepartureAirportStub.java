@@ -141,7 +141,7 @@ public class DepartureAirportStub {
         com.close ();
         ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
         ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
-        ((Passenger) Thread.currentThread ()).setReadyToShowDocuments ((boolean) inMessage.getAttributes()[2]);
+        ((Passenger) Thread.currentThread ()).setReadyToShowDocuments (false);
     }
 
     /**
@@ -192,7 +192,7 @@ public class DepartureAirportStub {
         com.close ();
         ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
         ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[1]);
-        ((Hostess) Thread.currentThread ()).setReadyToCheckDocuments ((boolean) inMessage.getAttributes()[2]);
+        ((Hostess) Thread.currentThread ()).setReadyToCheckDocuments (false);
     }
 
     /**
@@ -281,7 +281,7 @@ public class DepartureAirportStub {
         com.close ();
         ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
         ((Hostess) Thread.currentThread ()).setHostessCount ((int) inMessage.getAttributes()[1]);
-        ((Hostess) Thread.currentThread ()).setReadyForNextPassenger ((boolean) inMessage.getAttributes()[2]);
+        ((Hostess) Thread.currentThread ()).setReadyForNextPassenger (false);
         ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[3]);
     }
 
