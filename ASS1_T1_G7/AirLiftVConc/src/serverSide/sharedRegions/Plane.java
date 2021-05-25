@@ -1,7 +1,10 @@
 package serverSide.sharedRegions;
 
-import main.*;
-import entities.*;
+import commInfra.*;
+import clientSide.entities.*;
+import clientSide.stubs.*;
+import serverSide.entities.*;
+import serverSide.main.*;
 import genclass.GenericIO;
 
 /**
@@ -51,18 +54,18 @@ public class Plane {
     private final Passenger[] passengers;
 
     /**
-     * Reference to the general repository.
+     * Reference to the stub of the general repository.
      */
 
-    private final GeneralRepos repos;
+    private final GeneralReposStub repos;
 
     /**
      * Plane instantiation.
      *
-     * @param repos reference to the general repository
+     * @param repos reference to the stub of the general repository
      */
 
-    public Plane(GeneralRepos repos) {
+    public Plane(GeneralReposStub repos) {
         inF = 0;
         nextFlight = false;
         passengers = new Passenger[SimulPar.N];

@@ -1,5 +1,8 @@
 package serverSide.sharedRegions;
 
+import serverSide.sharedRegions.*;
+import clientSide.stubs.*;
+
 /**
  *    Destination Airport.
  *
@@ -12,17 +15,17 @@ package serverSide.sharedRegions;
 public class DestinationAirport {
 
     /**
-     * Reference to the general repository.
+     * Reference to the stub of the general repository.
      */
 
-    private final GeneralRepos repos;
+    private final GeneralReposStub repos;
 
     /**
      * Destination airport instantiation.
      *
-     * @param repos reference to the general repository
+     * @param repos reference to the stub of the general repository
      */
 
-    public DestinationAirport(GeneralRepos repos) { this.repos = repos; }
+    public DestinationAirport(GeneralReposStub repos) { this.repos = repos; }
 
 }

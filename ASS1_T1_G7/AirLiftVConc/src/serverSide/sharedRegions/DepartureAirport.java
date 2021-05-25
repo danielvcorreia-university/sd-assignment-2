@@ -1,10 +1,11 @@
 package serverSide.sharedRegions;
 
-import commInfra.MemException;
-import commInfra.MemFIFO;
-import entities.*;
+import commInfra.*;
+import clientSide.entities.*;
+import clientSide.stubs.*;
+import serverSide.entities.*;
+import serverSide.main.*;
 import genclass.GenericIO;
-import main.SimulPar;
 
 /**
  *    Departure Airport.
@@ -53,18 +54,18 @@ public class DepartureAirport {
     private MemFIFO<Integer> boardingQueue;
 
     /**
-     * Reference to the general repository.
+     * Reference to the stub of the general repository.
      */
 
-    private final GeneralRepos repos;
+    private final (GeneralReposStub  repos;
 
     /**
      * Departure airport instantiation.
      *
-     * @param repos reference to the general repository
+     * @param repos reference to the stub of the general repository
      */
 
-    public DepartureAirport(GeneralRepos repos) {
+    public DepartureAirport((GeneralReposStub  repos) {
         hostess = null;
         passengers = new Passenger[SimulPar.N];
         for (int i = 0; i < SimulPar.N; i++)
