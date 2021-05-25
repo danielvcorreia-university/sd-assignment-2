@@ -1,9 +1,8 @@
 package serverSide.sharedRegions;
 
 import commInfra.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
 import serverSide.main.*;
+import serverSide.entities.*;
 import genclass.GenericIO;
 
 /**
@@ -38,13 +37,13 @@ public class DepartureAirport {
      * Reference to passenger threads.
      */
 
-    private final Passenger[] passengers;
+    private final PassengerInterface[] passengers;
 
     /**
      * Reference to hostess thread.
      */
 
-    private Hostess hostess;
+    private HostessInterface hostess;
 
     /**
      * Waiting queue at the transfer gate.
@@ -66,7 +65,7 @@ public class DepartureAirport {
 
     public DepartureAirport(GeneralReposStub  repos) {
         hostess = null;
-        passengers = new Passenger[SimulPar.N];
+        passengers = new PassengerInterface[SimulPar.N];
         for (int i = 0; i < SimulPar.N; i++)
             passengers[i] = null;
         try {
@@ -98,10 +97,10 @@ public class DepartureAirport {
     public synchronized void prepareForPassBoarding() {
         int hostessId;                                          //hostess id
 
-        hostess = (Hostess) Thread.currentThread();
-        hostessId = ((Hostess) Thread.currentThread()).getHostessId();
-        ((Hostess) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
-        repos.setHostessState(hostessId, ((Hostess) Thread.currentThread()).getHostessState());
+        hostess = (HostessInterface) Thread.currentThread();
+        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
+        ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
+        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
         hostess.setHostessCount(0);
         inP = 0;
         while (inQ == 0)                             // the hostess waits for a passenger to arrive
@@ -124,8 +123,8 @@ public class DepartureAirport {
     public synchronized void waitInQueue() {
         int passengerId;                                      // passenger id
 
-        passengerId = ((Passenger) Thread.currentThread()).getPassengerId();
-        passengers[passengerId] = (Passenger) Thread.currentThread();
+        passengerId = ((PassengerInterface) Thread.currentThread()).getPassengerId();
+        passengers[passengerId] = (PassengerInterface) Thread.currentThread();
         passengers[passengerId].setPassengerState(PassengerStates.IN_QUEUE);
         repos.setPassengerState(passengerId, passengers[passengerId].getPassengerState());
         inQ++;                                        // the passenger arrives at the airport,
@@ -139,7 +138,7 @@ public class DepartureAirport {
 
         notifyAll();
 
-        while (!(((Passenger) Thread.currentThread()).getReadyToShowDocuments())) {
+        while (!(((PassengerInterface) Thread.currentThread()).getReadyToShowDocuments())) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -147,7 +146,7 @@ public class DepartureAirport {
                 System.exit(1);
             }
         }
-        ((Passenger) Thread.currentThread()).setReadyToShowDocuments(false);
+        ((PassengerInterface) Thread.currentThread()).setReadyToShowDocuments(false);
     }
 
 
@@ -161,9 +160,9 @@ public class DepartureAirport {
         int hostessId,                                          //hostess id
                 passengerId;                                        //passenger id
 
-        hostessId = ((Hostess) Thread.currentThread()).getHostessId();
-        ((Hostess) Thread.currentThread()).setHostessState(HostessStates.CHECK_PASSENGER);
-        repos.setHostessState(hostessId, ((Hostess) Thread.currentThread()).getHostessState());
+        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
+        ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.CHECK_PASSENGER);
+        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
 
         inQ--;
         hostess.setPassengerInQueue(!queueEmpty());
@@ -225,13 +224,13 @@ public class DepartureAirport {
     public synchronized void waitForNextPassenger() {
         int hostessId;                                          //hostess id
 
-        hostessId = ((Hostess) Thread.currentThread()).getHostessId();
-        ((Hostess) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
-        repos.setHostessState(hostessId, ((Hostess) Thread.currentThread()).getHostessState());
+        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
+        ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
+        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
         hostess.setHostessCount(hostess.getHostessCount()+1);
 
         notifyAll();
-        while ((inQ == 0 && hostess.getHostessCount() < 5 || (!((Hostess) Thread.currentThread()).getReadyForNextPassenger())) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
+        while ((inQ == 0 && hostess.getHostessCount() < 5 || (!((HostessInterface) Thread.currentThread()).getReadyForNextPassenger())) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
         {
             try {
                 wait();
@@ -241,7 +240,7 @@ public class DepartureAirport {
             }
         }
 
-        ((Hostess) Thread.currentThread()).setReadyForNextPassenger(false);
+        ((HostessInterface) Thread.currentThread()).setReadyForNextPassenger(false);
         hostess.setPassengerInQueue(!queueEmpty());
     }
 
@@ -256,7 +255,7 @@ public class DepartureAirport {
 
         hostess.setReadyForNextPassenger(true);
         inP +=1;
-        passengerId = ((Passenger) Thread.currentThread()).getPassengerId();
+        passengerId = ((PassengerInterface) Thread.currentThread()).getPassengerId();
         passengers[passengerId].setPassengerState(PassengerStates.IN_FLIGHT);
         repos.setPassengerState(passengerId, passengers[passengerId].getPassengerState());
         notifyAll();

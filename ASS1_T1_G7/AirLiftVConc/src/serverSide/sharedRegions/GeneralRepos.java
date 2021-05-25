@@ -1,7 +1,7 @@
 package serverSide.sharedRegions;
 
-import main.*;
-import entities.*;
+import serverSide.main.*;
+import serverSide.entities.*;
 import genclass.GenericIO;
 import genclass.TextFile;
 

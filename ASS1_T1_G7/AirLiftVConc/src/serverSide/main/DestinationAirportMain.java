@@ -1,9 +1,10 @@
 package serverSide.main;
 
-import clientSide.stubs.GeneralReposStub;
 import commInfra.*;
-import serverSide.sharedRegions.*;
-import serverSide.entities.*;
+import serverSide.sharedRegions.GeneralReposStub;
+import serverSide.sharedRegions.DestinationAirport;
+import serverSide.sharedRegions.DestinationAirportInterface;
+import serverSide.entities.DestinationAirportProxy;
 import genclass.GenericIO;
 
 /**

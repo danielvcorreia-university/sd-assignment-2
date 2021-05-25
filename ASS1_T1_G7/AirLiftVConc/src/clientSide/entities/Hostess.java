@@ -3,7 +3,7 @@ package clientSide.entities;
 import clientSide.stubs.DepartureAirportStub;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
-import main.SimulPar;
+import clientSide.main.SimulPar;
 
 /**
  *   Hostess thread.

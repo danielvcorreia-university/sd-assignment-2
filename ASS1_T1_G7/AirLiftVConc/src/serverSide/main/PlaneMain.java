@@ -1,9 +1,9 @@
 package serverSide.main;
 
-import clientSide.stubs.GeneralReposStub;
 import commInfra.ServerCom;
 import genclass.GenericIO;
 import serverSide.entities.PlaneProxy;
+import serverSide.sharedRegions.GeneralReposStub;
 import serverSide.sharedRegions.Plane;
 import serverSide.sharedRegions.PlaneInterface;
 

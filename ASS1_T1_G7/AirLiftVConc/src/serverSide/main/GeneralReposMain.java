@@ -1,8 +1,9 @@
 package serverSide.main;
 
 import commInfra.*;
-import serverSide.sharedRegions.*;
-import serverSide.entities.*;
+import serverSide.sharedRegions.GeneralRepos;
+import serverSide.sharedRegions.GeneralReposInterface;
+import serverSide.entities.GeneralReposProxy;
 import genclass.GenericIO;
 
 /**

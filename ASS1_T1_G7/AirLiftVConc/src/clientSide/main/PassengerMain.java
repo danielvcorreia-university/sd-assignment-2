@@ -5,7 +5,6 @@ import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
 import clientSide.entities.Passenger;
 import genclass.GenericIO;
-import main.SimulPar;
 
 /**
  *    Client side of the Air Lift (passengers).

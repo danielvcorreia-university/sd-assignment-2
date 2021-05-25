@@ -1,4 +1,4 @@
-package clientSide.stubs;
+package serverSide.sharedRegions;
 
 import commInfra.AttributeTypes;
 import commInfra.ClientCom;

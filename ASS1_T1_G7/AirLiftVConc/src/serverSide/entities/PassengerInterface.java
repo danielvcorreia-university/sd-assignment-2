@@ -9,7 +9,7 @@ package serverSide.entities;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-interface PassengerInterface {
+public interface PassengerInterface {
 
     /**
      * Set passenger id.

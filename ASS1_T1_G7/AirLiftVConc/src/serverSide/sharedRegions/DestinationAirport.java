@@ -1,7 +1,5 @@
 package serverSide.sharedRegions;
 
-import clientSide.stubs.*;
-
 /**
  *    Destination Airport.
  *

@@ -4,7 +4,7 @@ import commInfra.AttributeTypes;
 import commInfra.ClientCom;
 import commInfra.Message;
 import commInfra.MessageType;
-import entities.*;
+import clientSide.entities.*;
 import genclass.GenericIO;
 
 /**

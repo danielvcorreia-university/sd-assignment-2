@@ -3,7 +3,7 @@ package clientSide.entities;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
 import genclass.GenericIO;
-import main.SimulPar;
+import clientSide.main.SimulPar;
 
 /**
  *   Pilot thread.
