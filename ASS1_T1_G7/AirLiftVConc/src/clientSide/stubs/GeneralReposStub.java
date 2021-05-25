@@ -1,7 +1,9 @@
 package clientSide.stubs;
 
-import clientSide.entities.*;
-import commInfra.*;
+import commInfra.AttributeTypes;
+import commInfra.ClientCom;
+import commInfra.Message;
+import commInfra.MessageType;
 import genclass.GenericIO;
 
 /**
@@ -27,10 +29,10 @@ public class GeneralReposStub
     private int serverPortNumb;
 
     /**
-     *   Instantiation of a stub to the general repository.
+     *  Instantiation of a stub to the general repository.
      *
-     *     @param serverHostName name of the platform where is located the barber shop server
-     *     @param serverPortNumb port number for listening to service requests
+     *  @param serverHostName name of the platform where is located the general repository server
+     *  @param serverPortNumb port number for listening to service requests
      */
 
     public GeneralReposStub (String serverHostName, int serverPortNumb)
@@ -40,128 +42,141 @@ public class GeneralReposStub
     }
 
     /**
-     *   Operation initialization of the simulation.
+     * Set passenger state.
      *
-     *     @param fileName logging file name
-     *     @param nIter number of iterations of the customer life cycle
+     * @param id    passenger id
+     * @param state passenger state
      */
 
-    public void initSimul (String fileName, int nIter)
-    {
-        ClientCom com;                                                 // communication channel
-        Message outMessage,                                            // outgoing message
-                inMessage;                                             // incoming message
+    public void setPassengerState(int id, int state) {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
 
         com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())
+        while (!com.open ())    // waits for a connection to be established
         { try
-        { Thread.sleep ((long) (1000));
+        { Thread.currentThread ().sleep ((long) (10));
         }
         catch (InterruptedException e) {}
         }
-        outMessage = new Message (MessageType.SETNFIC, fileName, nIter);
+
+        outMessage = new Message(MessageType.SET_PASSENGER_STATE);
+        outMessage.setParametersSize(2);
+        outMessage.setParametersType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
+        outMessage.setParameters(new Object[]{id, state});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
-        if (inMessage.getMsgType() != MessageType.NFICDONE)
+
+        if (inMessage.getType() != MessageType.RETURN)
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+
         com.close ();
     }
 
     /**
-     *   Set barber state.
+     * Set hostess state.
      *
-     *     @param id barber id
-     *     @param state barber state
+     * @param idHostess unique identifier of hostess
+     * @param state hostess state
      */
 
-    public void setBarberState (int id, int state)
-    {
-        ClientCom com;                                                 // communication channel
-        Message outMessage,                                            // outgoing message
-                inMessage;                                             // incoming message
+    public void setHostessState(int idHostess, int state) {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
 
         com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())
+        while (!com.open ())    // waits for a connection to be established
         { try
-        { Thread.sleep ((long) (1000));
+        { Thread.currentThread ().sleep ((long) (10));
         }
         catch (InterruptedException e) {}
         }
-        outMessage = new Message (MessageType.STBST, id, state);
+
+        outMessage = new Message(MessageType.SET_HOSTESS_STATE);
+        outMessage.setParametersSize(2);
+        outMessage.setParametersType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
+        outMessage.setParameters(new Object[]{idHostess, state});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
-        if (inMessage.getMsgType() != MessageType.SACK)
+
+        if (inMessage.getType() != MessageType.RETURN)
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+
         com.close ();
     }
 
     /**
-     *   Set customer state.
+     * Set pilot state.
      *
-     *     @param id customer id
-     *     @param state customer state
+     * @param state pilot state
      */
 
-    public void setCustomerState (int id, int state)
-    {
-        ClientCom com;                                                 // communication channel
-        Message outMessage,                                            // outgoing message
-                inMessage;                                             // incoming message
+    public void setPilotState(int state) {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
 
         com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())
+        while (!com.open ())    // waits for a connection to be established
         { try
-        { Thread.sleep ((long) (1000));
+        { Thread.currentThread ().sleep ((long) (10));
         }
         catch (InterruptedException e) {}
         }
-        outMessage = new Message (MessageType.STCST, id, state);
+
+        outMessage = new Message(MessageType.SET_PILOT_STATE);
+        outMessage.setParametersSize(1);
+        outMessage.setParametersType(new int[]{AttributeTypes.INTEGER});
+        outMessage.setParameters(new Object[]{state});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
-        if (inMessage.getMsgType() != MessageType.SACK)
+
+        if (inMessage.getType() != MessageType.RETURN)
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+
         com.close ();
     }
 
     /**
-     *   Set barber and customer state.
-     *
-     *     @param barberId barber id
-     *     @param barberState barber state
-     *     @param customerId customer id
-     *     @param customerState customer state
+     * Report the final report of the General Repository when the pilot ended all the flights
+     * <p>
+     * It prints all the flights performed and the amount of passengers that were in each one
      */
 
-    public void setBarberCustomerState (int barberId, int barberState, int customerId, int customerState)
-    {
-        ClientCom com;                                                 // communication channel
-        Message outMessage,                                            // outgoing message
-                inMessage;                                             // incoming message
+    public void reportFinalInfo() {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
 
         com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())
+        while (!com.open ())    // waits for a connection to be established
         { try
-        { Thread.sleep ((long) (1000));
+        { Thread.currentThread ().sleep ((long) (10));
         }
         catch (InterruptedException e) {}
         }
-        outMessage = new Message (MessageType.STBCST, barberId, barberState, customerId, customerState);
+
+        outMessage = new Message(MessageType.REPORT_FINAL_INFO);
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
-        if (inMessage.getMsgType() != MessageType.SACK)
+
+        if (inMessage.getType() != MessageType.RETURN)
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+
         com.close ();
     }
 
@@ -173,12 +188,12 @@ public class GeneralReposStub
 
     public void shutdown ()
     {
-        ClientCom com;                                                 // communication channel
-        Message outMessage,                                            // outgoing message
-                inMessage;                                             // incoming message
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
 
         com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())
+        while (!com.open ())    // waits for a connection to be established
         { try
         { Thread.sleep ((long) (1000));
         }
@@ -187,11 +202,13 @@ public class GeneralReposStub
         outMessage = new Message (MessageType.SHUT);
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
-        if (inMessage.getMsgType() != MessageType.SHUTDONE)
+
+        if (inMessage.getType() != MessageType.SHUTDONE)
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+
         com.close ();
     }
 }

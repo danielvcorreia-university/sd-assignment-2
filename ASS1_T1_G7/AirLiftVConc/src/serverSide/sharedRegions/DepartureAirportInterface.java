@@ -1,5 +1,13 @@
 package serverSide.sharedRegions;
 
+import commInfra.AttributeTypes;
+import commInfra.Message;
+import commInfra.MessageType;
+import entities.Hostess;
+import entities.Passenger;
+import genclass.GenericIO;
+import serverSide.main.DepartureAirportMain;
+
 /**
  *  Interface to the Departure Airport.
  *
@@ -9,5 +17,130 @@ package serverSide.sharedRegions;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-public interface DepartureAirportInterface {
+public class DepartureAirportInterface {
+
+    /**
+     * Reference to the Departure Airport.
+     */
+
+    private final DepartureAirport depAirport;
+
+    /**
+     *  Instantiation of an interface to the Departure Airport.
+     *
+     *    @param depAirport reference to the departure airport
+     */
+
+    public DepartureAirportInterface (DepartureAirport depAirport) {
+        this.depAirport = depAirport;
+    }
+
+    /**
+     * Process and reply.
+     *
+     * The request is processed and an outgoing message is generated.
+     *
+     * @param inMessage input message
+     * @return outgoing message
+     */
+
+    public Message processAndReply(Message inMessage) {
+        Message outMessage = null;
+
+        switch(inMessage.getType()) {
+            case MessageType.PREPARE_FOR_PASS_BOARDING:
+                if (inMessage.getAttributesSize() != 1 || inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                    { GenericIO.writelnString ("Invalid message! -> PREPARE_FOR_PASS_BOARDING"); System.exit(1); }
+                ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
+                ((Hostess) Thread.currentThread ()).setHostessCount(0);
+                depAirport.prepareForPassBoarding();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(1);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER});
+                outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState()});
+                break;
+
+            case MessageType.WAIT_IN_QUEUE:
+                if ((inMessage.getAttributesSize() != 3 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN))
+                    { GenericIO.writelnString ("Invalid message! -> WAIT_IN_QUEUE"); System.exit(1); }
+                ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+                ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
+                ((Passenger) Thread.currentThread ()).setReadyToShowDocuments ((boolean) inMessage.getAttributes()[2]);
+                depAirport.waitInQueue();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(3);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
+                outMessage.setAttributes(new Object[]{((Passenger) Thread.currentThread()).getPassengerState(),
+                        ((Passenger) Thread.currentThread()).getPassengerId(), ((Passenger) Thread.currentThread()).getReadyToShowDocuments()});
+                break;
+
+            case MessageType.CHECK_DOCUMENTS:
+                if ((inMessage.getAttributesSize() != 3 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.BOOLEAN) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN))
+                    { GenericIO.writelnString ("Invalid message! -> CHECK_DOCUMENTS"); System.exit(1); }
+                ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
+                ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[1]);
+                ((Hostess) Thread.currentThread ()).setReadyToCheckDocuments ((boolean) inMessage.getAttributes()[2]);
+                depAirport.checkDocuments();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(3);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.BOOLEAN, AttributeTypes.BOOLEAN});
+                outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState(),
+                        ((Hostess) Thread.currentThread()).getPassengerInQueue(), ((Hostess) Thread.currentThread()).getReadyToCheckDocuments()});
+                break;
+
+            case MessageType.SHOW_DOCUMENTS:
+                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
+                    { GenericIO.writelnString ("Invalid message! -> SHOW_DOCUMENTS"); System.exit(1); }
+                depAirport.checkDocuments();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                break;
+
+            case MessageType.WAIT_FOR_NEXT_PASSENGER:
+                if ((inMessage.getAttributesSize() != 4 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN)
+                        || (inMessage.getAttributesType()[3] != AttributeTypes.BOOLEAN))
+                    { GenericIO.writelnString ("Invalid message! -> WAIT_FOR_NEXT_PASSENGER"); System.exit(1); }
+                ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
+                ((Hostess) Thread.currentThread ()).setHostessCount ((int) inMessage.getAttributes()[1]);
+                ((Hostess) Thread.currentThread ()).setReadyForNextPassenger ((boolean) inMessage.getAttributes()[2]);
+                ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[3]);
+                depAirport.waitForNextPassenger();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(4);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN, AttributeTypes.BOOLEAN});
+                outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState(), ((Hostess) Thread.currentThread()).getHostessCount(),
+                        ((Hostess) Thread.currentThread()).getReadyForNextPassenger(), ((Hostess) Thread.currentThread()).getPassengerInQueue()});
+                break;
+
+            case MessageType.BOARD_THE_PLANE:
+                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
+                    { GenericIO.writelnString ("Invalid message! -> BOARD_THE_PLANE"); System.exit(1); }
+                ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+                ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
+                depAirport.boardThePlane();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(2);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
+                outMessage.setAttributes(new Object[]{((Passenger) Thread.currentThread()).getPassengerState(),
+                        ((Passenger) Thread.currentThread()).getPassengerId()});
+                break;
+
+            case MessageType.SHUT:
+                DepartureAirportMain.endConnection();
+                outMessage = new Message(MessageType.SHUTDONE);
+                break;
+        }
+
+        return (outMessage);
+    }
 }

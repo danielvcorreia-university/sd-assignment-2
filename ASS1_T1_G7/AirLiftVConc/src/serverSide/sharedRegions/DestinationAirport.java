@@ -1,6 +1,5 @@
 package serverSide.sharedRegions;
 
-import serverSide.sharedRegions.*;
 import clientSide.stubs.*;
 
 /**

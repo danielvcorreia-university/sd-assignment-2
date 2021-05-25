@@ -35,7 +35,7 @@ public class DepartureAirportStub {
     /**
      *  Instantiation of a stub to the departure airport.
      *
-     *  @param serverHostName name of the platform where is located the barber shop server
+     *  @param serverHostName name of the platform where is located the departure airport server
      *  @param serverPortNumb port number for listening to service requests
      */
 
@@ -140,6 +140,7 @@ public class DepartureAirportStub {
 
         com.close ();
         ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
         ((Passenger) Thread.currentThread ()).setReadyToShowDocuments ((boolean) inMessage.getAttributes()[2]);
     }
 
@@ -331,6 +332,7 @@ public class DepartureAirportStub {
 
         com.close ();
         ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
     }
 
     /**

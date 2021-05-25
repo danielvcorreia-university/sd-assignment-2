@@ -1,11 +1,10 @@
 package serverSide.main;
 
-import clientSide.stubs.*;
+import clientSide.stubs.GeneralReposStub;
 import commInfra.*;
 import serverSide.sharedRegions.*;
 import serverSide.entities.*;
 import genclass.GenericIO;
-import java.net.*;
 
 /**
  *    Server side of the Departure Airport.
@@ -20,7 +19,15 @@ public class DepartureAirportMain {
      *  Flag signaling the service is active.
      */
 
-    public static boolean waitConnection;
+    public static boolean waitConnection = true;
+
+    /**
+     * End service. Called by the interface after receiving a shut message.
+     */
+
+    public static void endConnection() {
+        waitConnection = false;
+    }
 
     /**
      *  Main method.
@@ -52,14 +59,11 @@ public class DepartureAirportMain {
 
         DepartureAirportProxy depAirportProxy;                                // service provider agent
 
-        waitConnection = true;
         while (waitConnection)
-        { try
-        { sconi = scon.accept ();                                    // enter listening procedure
+        {
+            sconi = scon.accept ();                                    // enter listening procedure
             depAirportProxy = new DepartureAirportProxy (sconi, depAirportInterface);    // start a service provider agent to address
             depAirportProxy.start ();                                         //   the request of service
-        }
-        catch (SocketTimeoutException e) {}
         }
         scon.end ();                                                   // operations termination
         GenericIO.writelnString ("Server was shutdown.");

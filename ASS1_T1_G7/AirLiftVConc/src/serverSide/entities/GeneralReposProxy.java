@@ -12,7 +12,7 @@ import genclass.GenericIO;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-public class GeneralReposClientProxy extends Thread
+public class GeneralReposProxy extends Thread
 {
     /**
      *  Number of instantiayed threads.
@@ -39,9 +39,9 @@ public class GeneralReposClientProxy extends Thread
      *     @param reposInter interface to the general repository of information
      */
 
-    public GeneralReposClientProxy (ServerCom sconi, GeneralReposInterface reposInter)
+    public GeneralReposProxy (ServerCom sconi, GeneralReposInterface reposInter)
     {
-        super ("GeneralReposProxy_" + GeneralReposClientProxy.getProxyId ());
+        super ("GeneralReposProxy_" + GeneralReposProxy.getProxyId ());
         this.sconi = sconi;
         this.reposInter = reposInter;
     }
@@ -88,9 +88,8 @@ public class GeneralReposClientProxy extends Thread
         try
         { outMessage = reposInter.processAndReply (inMessage);         // process it
         }
-        catch (MessageException e)
+        catch (Exception e)
         { GenericIO.writelnString ("Thread " + getName () + ": " + e.getMessage () + "!");
-            GenericIO.writelnString (e.getMessageVal ().toString ());
             System.exit (1);
         }
         sconi.writeObject (outMessage);                                // send service reply

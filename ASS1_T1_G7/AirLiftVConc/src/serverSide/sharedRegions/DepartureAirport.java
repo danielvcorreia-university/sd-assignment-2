@@ -3,7 +3,6 @@ package serverSide.sharedRegions;
 import commInfra.*;
 import clientSide.entities.*;
 import clientSide.stubs.*;
-import serverSide.entities.*;
 import serverSide.main.*;
 import genclass.GenericIO;
 
@@ -57,7 +56,7 @@ public class DepartureAirport {
      * Reference to the stub of the general repository.
      */
 
-    private final (GeneralReposStub  repos;
+    private final GeneralReposStub  repos;
 
     /**
      * Departure airport instantiation.
@@ -65,7 +64,7 @@ public class DepartureAirport {
      * @param repos reference to the stub of the general repository
      */
 
-    public DepartureAirport((GeneralReposStub  repos) {
+    public DepartureAirport(GeneralReposStub  repos) {
         hostess = null;
         passengers = new Passenger[SimulPar.N];
         for (int i = 0; i < SimulPar.N; i++)

@@ -12,7 +12,7 @@ import genclass.GenericIO;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-public class PlaneProxy extends Thread implements PilotCloning , HostessCloning, PassengerCloning {
+public class PlaneProxy extends Thread implements PilotInterface , HostessInterface, PassengerInterface {
 
     /**
      *  Number of instantiayed threads.
@@ -57,6 +57,66 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
     private int passengerState;
 
     /**
+     * Pilot identification.
+     */
+
+    private int pilotId;
+
+    /**
+     * Count number of passengers transported by pilot.
+     */
+
+    private int transportedPassengers;
+
+    /**
+     * True if the plane is ready to take off.
+     */
+
+    private boolean readyToTakeOff;
+
+    /**
+     * Hostess identification.
+     */
+
+    private int hostessId;
+
+    /**
+     * Count number of passengers on the plane.
+     */
+
+    private int hostessCount;
+
+    /**
+     * Count number of passengers checked by hostess.
+     */
+
+    private int checkedPassengers;
+
+    /**
+     * True if there is any passenger in queue for the hostess to process.
+     */
+
+    private boolean passengerInQueue;
+
+    /**
+     * True if the hostess can check next passenger documents.
+     */
+
+    private boolean readyForNextPassenger;
+
+    /**
+     * True if the passenger has given his documents to the hostess for her to check.
+     */
+
+    private boolean readyToCheckDocuments;
+
+    /**
+     * True if the passenger has been called by the hostess to show his documents.
+     */
+
+    private boolean readyToShowDocuments;
+
+    /**
      *  Instantiation of a client proxy.
      *
      *     @param sconi communication channel
@@ -97,11 +157,76 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
     }
 
     /**
+     * Set pilot id.
+     *
+     * @param id pilot id
+     */
+
+    @Override
+    public void setPilotId(int id) {
+        pilotId = id;
+    }
+
+    /**
+     * Get pilot id.
+     *
+     * @return pilot id
+     */
+
+    @Override
+    public int getPilotId() {
+        return pilotId;
+    }
+
+    /**
+     * Set number of passengers which pilot has transported.
+     *
+     * @param nTransportedPassengers number of passengers checked
+     */
+
+    @Override
+    public void setTransportedPassengers(int nTransportedPassengers) { transportedPassengers = nTransportedPassengers; }
+
+    /**
+     * Get number of passengers which pilot has transported.
+     *
+     * @return hostess count
+     */
+
+    @Override
+    public int getTransportedPassengers() {
+        return transportedPassengers;
+    }
+
+    /**
+     * Set if hostess has informed the pilot that the plane is ready to take off.
+     *
+     * @param bool ready to take off
+     */
+
+    @Override
+    public void setReadyToTakeOff(boolean bool) {
+        readyToTakeOff = bool;
+    }
+
+    /**
+     * Get ready to take off
+     *
+     * @return True if ready to take off
+     */
+
+    @Override
+    public boolean getReadyToTakeOff() {
+        return readyToTakeOff;
+    }
+
+    /**
      *   Set pilot state.
      *
      *     @param state new pilot state
      */
 
+    @Override
     public void setPilotState (int state)
     {
         pilotState = state;
@@ -113,9 +238,140 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @return pilot state
      */
 
+    @Override
     public int getPilotState ()
     {
         return pilotState;
+    }
+
+    /**
+     * Set hostess id.
+     *
+     * @param id hostess id
+     */
+
+    @Override
+    public void setHostessId(int id) {
+        hostessId = id;
+    }
+
+    /**
+     * Get hostess id.
+     *
+     * @return hostess id
+     */
+
+    @Override
+    public int getHostessId() {
+        return hostessId;
+    }
+
+    /**
+     * Set hostess count.
+     *
+     * @param count hostess count
+     */
+
+    @Override
+    public void setHostessCount(int count) {
+        hostessCount = count;
+    }
+
+    /**
+     * Get hostess count.
+     *
+     * @return hostess count
+     */
+
+    @Override
+    public int getHostessCount() {
+        return hostessCount;
+    }
+
+    /**
+     * Set number of passengers which hostess checked documents.
+     *
+     * @param nCheckedPassengers number of passengers checked
+     */
+
+    @Override
+    public void setCheckedPassengers(int nCheckedPassengers) { checkedPassengers = nCheckedPassengers; }
+
+    /**
+     * Get number of passengers which hostess checked documents.
+     *
+     * @return checked passengers
+     */
+
+    @Override
+    public int getCheckedPassengers() {
+        return checkedPassengers;
+    }
+
+    /**
+     * Set if there is any passenger in queue for the hostess to process
+     *
+     * @param bool passenger in queue
+     */
+
+    @Override
+    public void setPassengerInQueue(boolean bool) {
+        passengerInQueue = bool;
+    }
+
+    /**
+     * Check if there is any passenger in queue for the hostess to process
+     *
+     * @return True if passenger in queue
+     */
+
+    @Override
+    public boolean getPassengerInQueue() {
+        return passengerInQueue;
+    }
+
+    /**
+     * Set if hostess is ready to check documents of the next passenger
+     *
+     * @param bool ready for next passenger
+     */
+
+    @Override
+    public void setReadyForNextPassenger(boolean bool) {
+        readyForNextPassenger = bool;
+    }
+
+    /**
+     * Get ready to check documents of the next passenger
+     *
+     * @return True if ready for next passenger
+     */
+
+    @Override
+    public boolean getReadyForNextPassenger() {
+        return readyForNextPassenger;
+    }
+
+    /**
+     * Set if hostess has received the documents from the passenger.
+     *
+     * @param bool ready to check documents
+     */
+
+    @Override
+    public void setReadyToCheckDocuments(boolean bool) {
+        readyToCheckDocuments = bool;
+    }
+
+    /**
+     * Get ready to check documents.
+     *
+     * @return ready to check documents
+     */
+
+    @Override
+    public boolean getReadyToCheckDocuments() {
+        return readyToCheckDocuments;
     }
 
     /**
@@ -124,6 +380,7 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @param state new hostess state
      */
 
+    @Override
     public void setHostessState (int state)
     {
         hostessState = state;
@@ -135,6 +392,7 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @return hostess state
      */
 
+    @Override
     public int getHostessState ()
     {
         return hostessState;
@@ -146,6 +404,7 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @param state new passenger state
      */
 
+    @Override
     public void setPassengerState (int state)
     {
         passengerState = state;
@@ -157,6 +416,7 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @return passenger state
      */
 
+    @Override
     public int getPassengerState ()
     {
         return passengerState;
@@ -168,6 +428,7 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @param id passenger id
      */
 
+    @Override
     public void setPassengerId (int id)
     {
         passengerId = id;
@@ -179,9 +440,32 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
      *     @return passenger id
      */
 
+    @Override
     public int getPassengerId ()
     {
         return passengerId;
+    }
+
+    /**
+     * Set if passenger is ready to show documents to hostess.
+     *
+     * @param bool ready to show documents
+     */
+
+    @Override
+    public void setReadyToShowDocuments(boolean bool) {
+        readyToShowDocuments = bool;
+    }
+
+    /**
+     * Get ready to show documents.
+     *
+     * @return True if ready to show documents
+     */
+
+    @Override
+    public boolean getReadyToShowDocuments() {
+        return readyToShowDocuments;
     }
 
     /**
@@ -200,9 +484,8 @@ public class PlaneProxy extends Thread implements PilotCloning , HostessCloning,
         try
         { outMessage = planeInterface.processAndReply (inMessage);         // process it
         }
-        catch (MessageException e)
+        catch (Exception e)
         { GenericIO.writelnString ("Thread " + getName () + ": " + e.getMessage () + "!");
-            GenericIO.writelnString (e.getMessageVal ().toString ());
             System.exit (1);
         }
         sconi.writeObject (outMessage);                                // send service reply

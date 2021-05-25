@@ -32,7 +32,7 @@ public class PlaneStub {
     /**
      *  Instantiation of a stub to the plane.
      *
-     *  @param serverHostName name of the platform where is located the barber shop server
+     *  @param serverHostName name of the platform where is located plane server
      *  @param serverPortNumb port number for listening to service requests
      */
 
@@ -357,8 +357,15 @@ public class PlaneStub {
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
+        if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
+        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
+            GenericIO.writelnString (inMessage.toString ());
+            System.exit (1);
+        }
 
         com.close ();
+        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
     }
 
     /**
@@ -458,6 +465,7 @@ public class PlaneStub {
 
         com.close ();
         ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
     }
 
     /**

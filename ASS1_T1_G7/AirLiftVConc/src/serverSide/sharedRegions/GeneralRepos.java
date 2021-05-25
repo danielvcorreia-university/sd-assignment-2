@@ -5,7 +5,6 @@ import entities.*;
 import genclass.GenericIO;
 import genclass.TextFile;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

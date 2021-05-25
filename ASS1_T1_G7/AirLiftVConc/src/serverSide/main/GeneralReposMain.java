@@ -1,11 +1,9 @@
 package serverSide.main;
 
-import clientSide.stubs.*;
 import commInfra.*;
 import serverSide.sharedRegions.*;
 import serverSide.entities.*;
 import genclass.GenericIO;
-import java.net.*;
 
 /**
  *    Server side of the General Repository of Information.
@@ -20,7 +18,15 @@ public class GeneralReposMain {
      *  Flag signaling the service is active.
      */
 
-    public static boolean waitConnection;
+    public static boolean waitConnection = true;
+
+    /**
+     * End service. Called by the interface after receiving a shut message.
+     */
+
+    public static void endConnection() {
+        waitConnection = false;
+    }
 
     /**
      *  Main method.
@@ -37,7 +43,7 @@ public class GeneralReposMain {
 
         /* service is established */
 
-        repos = new GeneralRepos ();                                      // service is instantiated
+        repos = new GeneralRepos ("log");                                      // service is instantiated
         reposInterface = new GeneralReposInterface (repos);                            // interface to the service is instantiated
         scon = new ServerCom (portNumb);                                         // listening channel at the public port is established
         scon.start ();
@@ -50,12 +56,10 @@ public class GeneralReposMain {
 
         waitConnection = true;
         while (waitConnection)
-        { try
-        { sconi = scon.accept ();                                    // enter listening procedure
+        {
+            sconi = scon.accept ();                                    // enter listening procedure
             reposProxy = new GeneralReposProxy (sconi, reposInterface);    // start a service provider agent to address
             reposProxy.start ();                                         //   the request of service
-        }
-        catch (SocketTimeoutException e) {}
         }
         scon.end ();                                                   // operations termination
         GenericIO.writelnString ("Server was shutdown.");
