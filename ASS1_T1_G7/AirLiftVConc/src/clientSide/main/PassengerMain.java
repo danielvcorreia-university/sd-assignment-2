@@ -38,9 +38,9 @@ public class PassengerMain {
 
         /* problem initialization */
 
-        depAirport = new DepartureAirportStub("sd104@l040101-ws01.ua.pt", depAirportPortNumb);
-        plane = new PlaneStub("sd104@l040101-ws02.ua.pt", planePortNumb);
-        desAirport = new DestinationAirportStub("sd104@l040101-ws03.ua.pt", desAirportPortNumb);
+        depAirport = new DepartureAirportStub("sd107@l040101-ws01.ua.pt", depAirportPortNumb);
+        plane = new PlaneStub("sd107@l040101-ws02.ua.pt", planePortNumb);
+        desAirport = new DestinationAirportStub("sd107@l040101-ws03.ua.pt", desAirportPortNumb);
         for (int i = 0; i < SimulPar.N; i++) { passenger[i] = new Passenger("Passenger_" + (i + 1), i, depAirport, plane, desAirport); }
 
         /* start of the simulation */
