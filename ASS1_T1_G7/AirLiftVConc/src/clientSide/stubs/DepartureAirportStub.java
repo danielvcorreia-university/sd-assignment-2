@@ -253,10 +253,10 @@ public class DepartureAirportStub {
         }
 
         outMessage = new Message(MessageType.WAIT_FOR_NEXT_PASSENGER);
-        outMessage.setAttributesSize(4);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN, AttributeTypes.BOOLEAN});
+        outMessage.setAttributesSize(3);
+        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
         outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState(), ((Hostess) Thread.currentThread()).getHostessCount(),
-                ((Hostess) Thread.currentThread()).getReadyForNextPassenger(), ((Hostess) Thread.currentThread()).getPassengerInQueue()});
+                ((Hostess) Thread.currentThread()).getPassengerInQueue()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -265,9 +265,8 @@ public class DepartureAirportStub {
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
-        if ((inMessage.getAttributesSize() != 4 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN)
-                || (inMessage.getAttributesType()[3] != AttributeTypes.BOOLEAN))
+        if ((inMessage.getAttributesSize() != 3 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN))
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
@@ -281,7 +280,6 @@ public class DepartureAirportStub {
         com.close ();
         ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
         ((Hostess) Thread.currentThread ()).setHostessCount ((int) inMessage.getAttributes()[1]);
-        ((Hostess) Thread.currentThread ()).setReadyForNextPassenger (false);
         ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[3]);
     }
 

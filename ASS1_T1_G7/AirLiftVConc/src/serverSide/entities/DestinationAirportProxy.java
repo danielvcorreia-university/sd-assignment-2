@@ -330,28 +330,6 @@ public class DestinationAirportProxy extends Thread implements PilotInterface , 
     }
 
     /**
-     * Set if hostess is ready to check documents of the next passenger
-     *
-     * @param bool ready for next passenger
-     */
-
-    @Override
-    public void setReadyForNextPassenger(boolean bool) {
-        readyForNextPassenger = bool;
-    }
-
-    /**
-     * Get ready to check documents of the next passenger
-     *
-     * @return True if ready for next passenger
-     */
-
-    @Override
-    public boolean getReadyForNextPassenger() {
-        return readyForNextPassenger;
-    }
-
-    /**
      * Set if hostess has received the documents from the passenger.
      *
      * @param bool ready to check documents

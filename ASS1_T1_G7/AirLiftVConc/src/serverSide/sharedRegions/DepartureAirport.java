@@ -58,6 +58,18 @@ public class DepartureAirport {
     private final GeneralReposStub  repos;
 
     /**
+     * True if the hostess can check next passenger documents.
+     */
+
+    private boolean readyForNextPassenger = false;
+
+    /**
+     * Set if hostess is ready to check documents of the next passenger
+     *
+     * @param bool ready for next passenger
+     */
+
+    /**
      * Departure airport instantiation.
      *
      * @param repos reference to the stub of the general repository
@@ -201,7 +213,6 @@ public class DepartureAirport {
 
     public synchronized void  showDocuments() {
         hostess.setReadyToCheckDocuments(true);
-
         notifyAll();
         while (hostess.getHostessState() != HostessStates.WAIT_FOR_PASSENGER)   // the passenger waits until he is clear to proceed
         {
@@ -229,7 +240,7 @@ public class DepartureAirport {
         hostess.setHostessCount(hostess.getHostessCount()+1);
 
         notifyAll();
-        while ((inQ == 0 && hostess.getHostessCount() < 5 || (!((HostessInterface) Thread.currentThread()).getReadyForNextPassenger())) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
+        while ((inQ == 0 && hostess.getHostessCount() < 5 || (!readyForNextPassenger)) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
         {
             try {
                 wait();
@@ -239,7 +250,7 @@ public class DepartureAirport {
             }
         }
 
-        ((HostessInterface) Thread.currentThread()).setReadyForNextPassenger(false);
+        readyForNextPassenger = false;
         hostess.setPassengerInQueue(!queueEmpty());
     }
 
@@ -252,7 +263,7 @@ public class DepartureAirport {
     public synchronized void boardThePlane() {
         int passengerId;                                            // passenger id
 
-        hostess.setReadyForNextPassenger(true);
+        readyForNextPassenger = true;
         inP +=1;
         passengerId = ((PassengerInterface) Thread.currentThread()).getPassengerId();
         passengers[passengerId].setPassengerState(PassengerStates.IN_FLIGHT);

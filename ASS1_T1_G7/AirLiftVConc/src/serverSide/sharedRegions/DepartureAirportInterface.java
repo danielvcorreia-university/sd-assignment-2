@@ -97,27 +97,25 @@ public class DepartureAirportInterface {
                 if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
                         || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
                     { GenericIO.writelnString ("Invalid message! -> SHOW_DOCUMENTS"); System.exit(1); }
-                depAirport.checkDocuments();
+                depAirport.showDocuments();
                 // outMessage
                 outMessage = new Message(MessageType.RETURN);
                 break;
 
             case MessageType.WAIT_FOR_NEXT_PASSENGER:
-                if ((inMessage.getAttributesSize() != 4 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN)
-                        || (inMessage.getAttributesType()[3] != AttributeTypes.BOOLEAN))
+                if ((inMessage.getAttributesSize() != 3 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN))
                     { GenericIO.writelnString ("Invalid message! -> WAIT_FOR_NEXT_PASSENGER"); System.exit(1); }
                 ((HostessInterface) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
                 ((HostessInterface) Thread.currentThread ()).setHostessCount ((int) inMessage.getAttributes()[1]);
-                ((HostessInterface) Thread.currentThread ()).setReadyForNextPassenger ((boolean) inMessage.getAttributes()[2]);
-                ((HostessInterface) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[3]);
+                ((HostessInterface) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[2]);
                 depAirport.waitForNextPassenger();
                 // outMessage
                 outMessage = new Message(MessageType.RETURN);
-                outMessage.setAttributesSize(4);
-                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN, AttributeTypes.BOOLEAN});
+                outMessage.setAttributesSize(3);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
                 outMessage.setAttributes(new Object[]{((HostessInterface) Thread.currentThread()).getHostessState(), ((HostessInterface) Thread.currentThread()).getHostessCount(),
-                        ((HostessInterface) Thread.currentThread()).getReadyForNextPassenger(), ((HostessInterface) Thread.currentThread()).getPassengerInQueue()});
+                        ((HostessInterface) Thread.currentThread()).getPassengerInQueue()});
                 break;
 
             case MessageType.BOARD_THE_PLANE:
