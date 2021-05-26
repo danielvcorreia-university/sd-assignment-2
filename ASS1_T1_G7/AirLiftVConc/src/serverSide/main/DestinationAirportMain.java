@@ -67,7 +67,6 @@ public class DestinationAirportMain {
             destAirportProxy = new DestinationAirportProxy (sconi, destAirportInterface);    // start a service provider agent to address
             destAirportProxy.start ();                                         //   the request of service
         }
-        reposStub.shutdown();
         scon.end ();                                                   // operations termination
         GenericIO.writelnString ("Server was shutdown.");
     }

@@ -68,6 +68,7 @@ public class PlaneMain {
             planeProxy.start ();                                         //   the request of service
         }
         reposStub.shutdown();
+        reposStub.shutdown();
         scon.end ();                                                   // operations termination
         GenericIO.writelnString ("Server was shutdown.");
     }
