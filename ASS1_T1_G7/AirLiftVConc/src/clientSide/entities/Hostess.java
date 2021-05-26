@@ -3,7 +3,7 @@ package clientSide.entities;
 import clientSide.stubs.DepartureAirportStub;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
-import clientSide.main.SimulPar;
+import clientSide.main.*;
 import genclass.GenericIO;
 
 /**

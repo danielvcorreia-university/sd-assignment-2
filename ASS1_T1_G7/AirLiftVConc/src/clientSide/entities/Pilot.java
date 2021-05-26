@@ -4,7 +4,7 @@ import clientSide.stubs.DepartureAirportStub;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
 import genclass.GenericIO;
-import clientSide.main.SimulPar;
+import clientSide.main.*;
 
 /**
  *   Pilot thread.

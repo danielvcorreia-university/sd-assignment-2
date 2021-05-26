@@ -4,10 +4,7 @@ import commInfra.AttributeTypes;
 import commInfra.ClientCom;
 import commInfra.Message;
 import commInfra.MessageType;
-import clientSide.entities.Hostess;
-import clientSide.entities.HostessStates;
-import clientSide.entities.Passenger;
-import clientSide.entities.PassengerStates;
+import clientSide.entities.*;
 import genclass.GenericIO;
 
 /**
