@@ -5,4 +5,4 @@ sshpass -f password scp departureairport.zip sd107@l040101-ws01.ua.pt:~/departur
 echo "Decompressing data sent to the departure airport node."
 sshpass -f password ssh sd107@l040101-ws01.ua.pt 'cd ~/departureairport/ ; unzip -uq departureairport.zip'
 echo "Executing program at the departure airport node."
-sshpass -f password ssh sd107@l040101-ws01.ua.pt 'cd ~/departureairport/ ; java -cp .:genclass.jar serverSide.main.DepartureAirportMain
+sshpass -f password ssh sd107@l040101-ws01.ua.pt 'cd ~/departureairport/departureairport/ ; java -cp .:genclass.jar serverSide.main.DepartureAirportMain'

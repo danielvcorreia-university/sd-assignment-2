@@ -5,4 +5,4 @@ sshpass -f password scp pilot.zip sd107@l040101-ws06.ua.pt:~/pilot/
 echo "Decompressing data sent to the pilot node."
 sshpass -f password ssh sd107@l040101-ws06.ua.pt 'cd ~/pilot/ ; unzip -uq pilot.zip'
 echo "Executing program at the pilot node."
-sshpass -f password ssh sd107@l040101-ws06.ua.pt 'cd ~/pilot/ ; java -cp .:genclass.jar clientSide.main.PilotMain
+sshpass -f password ssh sd107@l040101-ws06.ua.pt 'cd ~/pilot/pilot/ ; java -cp .:genclass.jar clientSide.main.PilotMain'
