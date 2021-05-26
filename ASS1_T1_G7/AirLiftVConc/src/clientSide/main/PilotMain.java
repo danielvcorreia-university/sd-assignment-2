@@ -38,9 +38,9 @@ public class PilotMain {
 
         /* problem initialization */
 
-        depAirport = new DepartureAirportStub("sd107@l040101-ws01.ua.pt", depAirportPortNumb);
-        plane = new PlaneStub("sd107@l040101-ws02.ua.pt", planePortNumb);
-        desAirport = new DestinationAirportStub("sd107@l040101-ws03.ua.pt", desAirportPortNumb);
+        depAirport = new DepartureAirportStub("l040101-ws01.ua.pt", depAirportPortNumb);
+        plane = new PlaneStub("l040101-ws02.ua.pt", planePortNumb);
+        desAirport = new DestinationAirportStub("l040101-ws03.ua.pt", desAirportPortNumb);
         pilot = new Pilot("Pilot_" + (1), 0, plane, desAirport, depAirport);
 
         /* start of the simulation */

@@ -38,9 +38,9 @@ public class HostessMain {
 
         /* problem initialization */
 
-        depAirport = new DepartureAirportStub("sd107@l040101-ws01.ua.pt", depAirportPortNumb);
-        plane = new PlaneStub("sd107@l040101-ws02.ua.pt", planePortNumb);
-        desAirport = new DestinationAirportStub("sd107@l040101-ws03.ua.pt", desAirportPortNumb);
+        depAirport = new DepartureAirportStub("l040101-ws01.ua.pt", depAirportPortNumb);
+        plane = new PlaneStub("l040101-ws02.ua.pt", planePortNumb);
+        desAirport = new DestinationAirportStub("l040101-ws03.ua.pt", desAirportPortNumb);
         hostess = new Hostess("Hostess_" + (1), 0, depAirport, plane, desAirport);
 
         /* start of the simulation */

@@ -43,7 +43,7 @@ public class PlaneMain {
         GeneralReposStub reposStub;                                    // stub to the general repository
         ServerCom scon, sconi;                                         // communication channels
         int portNumb = 22161;                                             // port number for listening to service requests
-        String reposServerName = "sd107@l040101-ws05.ua.pt";              // name of the platform where is located the server for the general repository
+        String reposServerName = "l040101-ws05.ua.pt";              // name of the platform where is located the server for the general repository
         int reposPortNumb = 22163;                                        // port nunber where the server for the general repository is listening to service requests
 
         /* service is established */
