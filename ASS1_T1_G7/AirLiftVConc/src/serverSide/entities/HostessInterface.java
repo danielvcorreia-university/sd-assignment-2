@@ -76,22 +76,6 @@ public interface HostessInterface {
     boolean getPassengerInQueue();
 
     /**
-     * Set if hostess has received the documents from the passenger.
-     *
-     * @param bool ready to check documents
-     */
-
-    void setReadyToCheckDocuments(boolean bool);
-
-    /**
-     * Get ready to check documents.
-     *
-     * @return ready to check documents
-     */
-
-    boolean getReadyToCheckDocuments();
-
-    /**
      * Set hostess state.
      *
      * @param state new hostess state

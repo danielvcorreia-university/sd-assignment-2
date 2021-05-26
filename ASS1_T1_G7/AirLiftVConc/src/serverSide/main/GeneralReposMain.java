@@ -19,7 +19,7 @@ public class GeneralReposMain {
      *  Flag signaling the service is active.
      */
 
-    public static boolean waitConnection = true;
+    public static boolean waitConnection;
 
     /**
      * End service. Called by the interface after receiving a shut message.

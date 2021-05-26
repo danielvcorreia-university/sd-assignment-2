@@ -198,28 +198,6 @@ public class DepartureAirportProxy extends Thread implements PilotInterface , Ho
     }
 
     /**
-     * Set if hostess has informed the pilot that the plane is ready to take off.
-     *
-     * @param bool ready to take off
-     */
-
-    @Override
-    public void setReadyToTakeOff(boolean bool) {
-        readyToTakeOff = bool;
-    }
-
-    /**
-     * Get ready to take off
-     *
-     * @return True if ready to take off
-     */
-
-    @Override
-    public boolean getReadyToTakeOff() {
-        return readyToTakeOff;
-    }
-
-    /**
      *   Set pilot state.
      *
      *     @param state new pilot state
@@ -327,28 +305,6 @@ public class DepartureAirportProxy extends Thread implements PilotInterface , Ho
     @Override
     public boolean getPassengerInQueue() {
         return passengerInQueue;
-    }
-
-    /**
-     * Set if hostess has received the documents from the passenger.
-     *
-     * @param bool ready to check documents
-     */
-
-    @Override
-    public void setReadyToCheckDocuments(boolean bool) {
-        readyToCheckDocuments = bool;
-    }
-
-    /**
-     * Get ready to check documents.
-     *
-     * @return ready to check documents
-     */
-
-    @Override
-    public boolean getReadyToCheckDocuments() {
-        return readyToCheckDocuments;
     }
 
     /**

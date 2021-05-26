@@ -63,9 +63,6 @@ public class PlaneStub {
         }
 
         outMessage = new Message(MessageType.FINAL_REPORT);
-        outMessage.setAttributesSize(1);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER});
-        outMessage.setAttributes(new Object[]{((Pilot) Thread.currentThread()).getPilotState()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -248,10 +245,9 @@ public class PlaneStub {
         }
 
         outMessage = new Message(MessageType.WAIT_FOR_ALL_IN_BOARDING);
-        outMessage.setAttributesSize(2);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
-        outMessage.setAttributes(new Object[]{((Pilot) Thread.currentThread()).getPilotState(),
-                ((Pilot) Thread.currentThread()).getReadyToTakeOff()});
+        outMessage.setAttributesSize(1);
+        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER});
+        outMessage.setAttributes(new Object[]{((Pilot) Thread.currentThread()).getPilotState()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -260,8 +256,7 @@ public class PlaneStub {
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
-        if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                || (inMessage.getAttributesType()[1] != AttributeTypes.BOOLEAN))
+        if ((inMessage.getAttributesSize() != 1 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER))
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
@@ -274,7 +269,6 @@ public class PlaneStub {
 
         com.close ();
         ((Pilot) Thread.currentThread ()).setPilotState ((int) inMessage.getAttributes()[0]);
-        ((Pilot) Thread.currentThread ()).setReadyToTakeOff (false);
     }
 
     /**
@@ -345,10 +339,6 @@ public class PlaneStub {
         }
 
         outMessage = new Message(MessageType.WAIT_FOR_END_OFF_FLIGHT);
-        outMessage.setAttributesSize(2);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
-        outMessage.setAttributes(new Object[]{((Passenger) Thread.currentThread()).getPassengerState(),
-                ((Passenger) Thread.currentThread()).getPassengerId()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -357,15 +347,8 @@ public class PlaneStub {
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
-        if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
-        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
-            GenericIO.writelnString (inMessage.toString ());
-            System.exit (1);
-        }
 
         com.close ();
-        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
     }
 
     /**

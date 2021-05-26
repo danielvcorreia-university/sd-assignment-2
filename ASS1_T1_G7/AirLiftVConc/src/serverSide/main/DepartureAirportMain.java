@@ -20,7 +20,7 @@ public class DepartureAirportMain {
      *  Flag signaling the service is active.
      */
 
-    public static boolean waitConnection = true;
+    public static boolean waitConnection;
 
     /**
      * End service. Called by the interface after receiving a shut message.
@@ -60,6 +60,7 @@ public class DepartureAirportMain {
 
         DepartureAirportProxy depAirportProxy;                                // service provider agent
 
+        waitConnection = true;
         while (waitConnection)
         {
             sconi = scon.accept ();                                    // enter listening procedure

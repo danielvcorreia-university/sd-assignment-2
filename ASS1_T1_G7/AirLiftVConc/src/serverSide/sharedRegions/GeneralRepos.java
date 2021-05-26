@@ -210,6 +210,8 @@ public class GeneralRepos {
                 break;
             case HostessStates.CHECK_PASSENGER:
                 lineStatus += "CKPS ";
+                if (hostessAnteriorState == HostessStates.WAIT_FOR_PASSENGER)
+                    { log.writelnString("\nFlight " + numeroDeVoo + ": passenger " + passageiroAtual + " checked."); }
                 hostessAnteriorState = HostessStates.CHECK_PASSENGER;
                 break;
             case HostessStates.READY_TO_FLY:
@@ -240,7 +242,6 @@ public class GeneralRepos {
                     if (passAnteriorState[i] == PassengerStates.IN_QUEUE) {
                         InQ--;
                         InF++;
-                        log.writelnString("\nFlight " + numeroDeVoo + ": passenger " + passageiroAtual + " checked.");
                     }
                     passAnteriorState[i] = PassengerStates.IN_FLIGHT;
                     break;

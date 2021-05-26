@@ -141,7 +141,7 @@ public class DepartureAirportStub {
         com.close ();
         ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
         ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
-        ((Passenger) Thread.currentThread ()).setReadyToShowDocuments (false);
+        ((Passenger) Thread.currentThread ()).setReadyToShowDocuments ((boolean) inMessage.getAttributes()[2]);
     }
 
     /**
@@ -165,10 +165,10 @@ public class DepartureAirportStub {
         }
 
         outMessage = new Message(MessageType.CHECK_DOCUMENTS);
-        outMessage.setAttributesSize(3);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.BOOLEAN, AttributeTypes.BOOLEAN});
+        outMessage.setAttributesSize(2);
+        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
         outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState(),
-                ((Hostess) Thread.currentThread()).getPassengerInQueue(), ((Hostess) Thread.currentThread()).getReadyToCheckDocuments()});
+                ((Hostess) Thread.currentThread()).getPassengerInQueue()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -177,8 +177,8 @@ public class DepartureAirportStub {
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
         }
-        if ((inMessage.getAttributesSize() != 3 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                || (inMessage.getAttributesType()[1] != AttributeTypes.BOOLEAN) || (inMessage.getAttributesType()[2] != AttributeTypes.BOOLEAN))
+        if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                || (inMessage.getAttributesType()[1] != AttributeTypes.BOOLEAN))
         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
             GenericIO.writelnString (inMessage.toString ());
             System.exit (1);
@@ -192,7 +192,6 @@ public class DepartureAirportStub {
         com.close ();
         ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
         ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[1]);
-        ((Hostess) Thread.currentThread ()).setReadyToCheckDocuments (false);
     }
 
     /**
@@ -216,10 +215,6 @@ public class DepartureAirportStub {
         }
 
         outMessage = new Message(MessageType.SHOW_DOCUMENTS);
-        outMessage.setAttributesSize(2);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
-        outMessage.setAttributes(new Object[]{((Passenger) Thread.currentThread()).getPassengerState(),
-                ((Passenger) Thread.currentThread()).getPassengerId()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -253,10 +248,10 @@ public class DepartureAirportStub {
         }
 
         outMessage = new Message(MessageType.WAIT_FOR_NEXT_PASSENGER);
-        outMessage.setAttributesSize(3);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
+        outMessage.setAttributesSize(4);
+        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
         outMessage.setAttributes(new Object[]{((Hostess) Thread.currentThread()).getHostessState(), ((Hostess) Thread.currentThread()).getHostessCount(),
-                ((Hostess) Thread.currentThread()).getPassengerInQueue()});
+                ((Hostess) Thread.currentThread()).getCheckedPassengers(), ((Hostess) Thread.currentThread()).getPassengerInQueue()});
         com.writeObject (outMessage);
         inMessage = (Message) com.readObject ();
 
@@ -280,7 +275,7 @@ public class DepartureAirportStub {
         com.close ();
         ((Hostess) Thread.currentThread ()).setHostessState ((int) inMessage.getAttributes()[0]);
         ((Hostess) Thread.currentThread ()).setHostessCount ((int) inMessage.getAttributes()[1]);
-        ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[3]);
+        ((Hostess) Thread.currentThread ()).setPassengerInQueue ((boolean) inMessage.getAttributes()[2]);
     }
 
     /**

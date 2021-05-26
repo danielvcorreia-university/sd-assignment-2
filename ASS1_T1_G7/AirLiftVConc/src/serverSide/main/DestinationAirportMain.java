@@ -20,7 +20,7 @@ public class DestinationAirportMain {
      *  Flag signaling the service is active.
      */
 
-    public static boolean waitConnection = true;
+    public static boolean waitConnection;
 
     /**
      * End service. Called by the interface after receiving a shut message.
@@ -60,12 +60,14 @@ public class DestinationAirportMain {
 
         DestinationAirportProxy destAirportProxy;                                // service provider agent
 
+        waitConnection = true;
         while (waitConnection)
         {
             sconi = scon.accept ();                                    // enter listening procedure
             destAirportProxy = new DestinationAirportProxy (sconi, destAirportInterface);    // start a service provider agent to address
             destAirportProxy.start ();                                         //   the request of service
         }
+        reposStub.shutdown();
         scon.end ();                                                   // operations termination
         GenericIO.writelnString ("Server was shutdown.");
     }

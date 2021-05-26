@@ -61,7 +61,19 @@ public class DepartureAirport {
      * True if the hostess can check next passenger documents.
      */
 
-    private boolean readyForNextPassenger = false;
+    private boolean readyForNextPassenger;
+
+    /**
+     * True if the passenger has given his documents to the hostess for her to check.
+     */
+
+    private boolean readyToCheckDocuments;
+
+    /**
+     * True if the passenger can board the plane after showing documents to hostess.
+     */
+
+    private boolean canBoardThePlane;
 
     /**
      * Set if hostess is ready to check documents of the next passenger
@@ -78,6 +90,8 @@ public class DepartureAirport {
     public DepartureAirport(GeneralReposStub  repos) {
         hostess = null;
         passengers = new PassengerInterface[SimulPar.N];
+        this.readyForNextPassenger = false;
+        this.readyToCheckDocuments = false;
         for (int i = 0; i < SimulPar.N; i++)
             passengers[i] = null;
         try {
@@ -96,9 +110,7 @@ public class DepartureAirport {
      * It is called to check if the passenger queue is currently empty
      */
 
-    public boolean queueEmpty() {
-        return inQ == 0;
-    }
+    public boolean queueEmpty() { return inQ == 0; }
 
     /**
      * Operation prepare for pass boarding
@@ -107,13 +119,12 @@ public class DepartureAirport {
      */
 
     public synchronized void prepareForPassBoarding() {
-        int hostessId;                                          //hostess id
 
         hostess = (HostessInterface) Thread.currentThread();
-        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
+
         ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
-        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
-        hostess.setHostessCount(0);
+        repos.setHostessState(((HostessInterface) Thread.currentThread()).getHostessId(), ((HostessInterface) Thread.currentThread()).getHostessState());
+        ((HostessInterface) Thread.currentThread()).setHostessCount(0);
         inP = 0;
         while (inQ == 0)                             // the hostess waits for a passenger to arrive
         {
@@ -169,15 +180,14 @@ public class DepartureAirport {
      */
 
     public synchronized void checkDocuments() {
-        int hostessId,                                          //hostess id
-                passengerId;                                        //passenger id
+        int passengerId;                                        //passenger id
 
-        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
         ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.CHECK_PASSENGER);
-        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
+        repos.setHostessState(((HostessInterface) Thread.currentThread()).getHostessId(), ((HostessInterface) Thread.currentThread()).getHostessState());
 
         inQ--;
-        hostess.setPassengerInQueue(!queueEmpty());
+        ((HostessInterface) Thread.currentThread()).setPassengerInQueue(!queueEmpty());
+
         try {
             passengerId = boardingQueue.read();                            // the hostess calls the customer
             if ((passengerId < 0) || (passengerId >= SimulPar.N))
@@ -192,7 +202,7 @@ public class DepartureAirport {
 
         notifyAll();
 
-        while (!hostess.getReadyToCheckDocuments())             // the hostess waits for the passenger to give his documents
+        while (!readyToCheckDocuments)             // the hostess waits for the passenger to give his documents
         {
             try {
                 wait();
@@ -202,7 +212,7 @@ public class DepartureAirport {
             }
         }
 
-        hostess.setReadyToCheckDocuments(false);
+        readyToCheckDocuments = false;
     }
 
     /**
@@ -212,9 +222,10 @@ public class DepartureAirport {
      */
 
     public synchronized void  showDocuments() {
-        hostess.setReadyToCheckDocuments(true);
+        readyToCheckDocuments = true;
+
         notifyAll();
-        while (hostess.getHostessState() != HostessStates.WAIT_FOR_PASSENGER)   // the passenger waits until he is clear to proceed
+        while (!canBoardThePlane)   // the passenger waits until he is clear to proceed
         {
             try {
                 wait();
@@ -223,6 +234,7 @@ public class DepartureAirport {
                 System.exit(1);
             }
         }
+        canBoardThePlane = false;
     }
 
     /**
@@ -232,16 +244,16 @@ public class DepartureAirport {
      */
 
     public synchronized void waitForNextPassenger() {
-        int hostessId;                                          //hostess id
-
-        hostessId = ((HostessInterface) Thread.currentThread()).getHostessId();
         ((HostessInterface) Thread.currentThread()).setHostessState(HostessStates.WAIT_FOR_PASSENGER);
-        repos.setHostessState(hostessId, ((HostessInterface) Thread.currentThread()).getHostessState());
-        hostess.setHostessCount(hostess.getHostessCount()+1);
+        repos.setHostessState(((HostessInterface) Thread.currentThread()).getHostessId(), ((HostessInterface) Thread.currentThread()).getHostessState());
+        ((HostessInterface) Thread.currentThread()).setHostessCount(((HostessInterface) Thread.currentThread()).getHostessCount()+1);
+        canBoardThePlane = true;
 
         notifyAll();
-        while ((inQ == 0 && hostess.getHostessCount() < 5 || (!readyForNextPassenger)) && !((inP + hostess.getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
+        while ((inQ == 0 && ((HostessInterface) Thread.currentThread()).getHostessCount() < 5 || (!readyForNextPassenger)) && !((inP + ((HostessInterface) Thread.currentThread()).getCheckedPassengers()) >= SimulPar.N))    // the hostess waits for a passenger to enter the plane
         {
+            //System.out.print("\n" + (inP + ((HostessInterface) Thread.currentThread()).getCheckedPassengers()) + "\n");
+            //Plane.getInF()
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -251,7 +263,7 @@ public class DepartureAirport {
         }
 
         readyForNextPassenger = false;
-        hostess.setPassengerInQueue(!queueEmpty());
+        ((HostessInterface) Thread.currentThread()).setPassengerInQueue(!queueEmpty());
     }
 
     /**
@@ -261,13 +273,11 @@ public class DepartureAirport {
      */
 
     public synchronized void boardThePlane() {
-        int passengerId;                                            // passenger id
 
         readyForNextPassenger = true;
         inP +=1;
-        passengerId = ((PassengerInterface) Thread.currentThread()).getPassengerId();
-        passengers[passengerId].setPassengerState(PassengerStates.IN_FLIGHT);
-        repos.setPassengerState(passengerId, passengers[passengerId].getPassengerState());
+        ((PassengerInterface) Thread.currentThread()).setPassengerState(PassengerStates.IN_FLIGHT);
+        repos.setPassengerState(((PassengerInterface) Thread.currentThread()).getPassengerId(), ((PassengerInterface) Thread.currentThread()).getPassengerState());
         notifyAll();
     }
 }

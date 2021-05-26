@@ -50,8 +50,6 @@ public class PlaneInterface {
 
         switch(inMessage.getType()) {
             case MessageType.FINAL_REPORT:
-                if (inMessage.getAttributesSize() != 1 || inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                    { GenericIO.writelnString ("Invalid message! -> FINAL_REPORT"); System.exit(1); }
                 plane.reportFinalReport();
                 // outMessage
                 outMessage = new Message(MessageType.RETURN);
@@ -97,18 +95,15 @@ public class PlaneInterface {
                 break;
 
             case MessageType.WAIT_FOR_ALL_IN_BOARDING:
-                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                        || (inMessage.getAttributesType()[1] != AttributeTypes.BOOLEAN))
+                if ((inMessage.getAttributesSize() != 1 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER))
                     { GenericIO.writelnString ("Invalid message! -> WAIT_FOR_ALL_IN_BOARDING"); System.exit(1); }
                 ((PilotInterface) Thread.currentThread ()).setPilotState ((int) inMessage.getAttributes()[0]);
-                ((PilotInterface) Thread.currentThread ()).setReadyToTakeOff ((boolean) inMessage.getAttributes()[1]);
                 plane.waitForAllInBoarding();
                 // outMessage
                 outMessage = new Message(MessageType.RETURN);
-                outMessage.setAttributesSize(2);
-                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.BOOLEAN});
-                outMessage.setAttributes(new Object[]{((PilotInterface) Thread.currentThread()).getPilotState(),
-                        ((PilotInterface) Thread.currentThread()).getReadyToTakeOff()});
+                outMessage.setAttributesSize(1);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER});
+                outMessage.setAttributes(new Object[]{((PilotInterface) Thread.currentThread()).getPilotState()});
                 break;
 
             case MessageType.INFORM_PLANE_READY_TO_TAKE_OFF:
@@ -124,17 +119,9 @@ public class PlaneInterface {
                 break;
 
             case MessageType.WAIT_FOR_END_OFF_FLIGHT:
-                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
-                    { GenericIO.writelnString ("Invalid message! -> WAIT_FOR_END_OFF_FLIGHT"); System.exit(1); }
-                ((PassengerInterface) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
                 plane.waitForEndOfFlight();
                 // outMessage
                 outMessage = new Message(MessageType.RETURN);
-                outMessage.setAttributesSize(2);
-                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
-                outMessage.setAttributes(new Object[]{((PassengerInterface) Thread.currentThread()).getPassengerState(),
-                        ((PassengerInterface) Thread.currentThread()).getPassengerId()});
                 break;
 
             case MessageType.ANNOUNCE_ARRIVAL:

@@ -1,5 +1,6 @@
 package clientSide.entities;
 
+import clientSide.stubs.DepartureAirportStub;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
 import genclass.GenericIO;
@@ -32,16 +33,16 @@ public class Pilot extends Thread {
     private int pilotState;
 
     /**
-     * True if the plane is ready to take off.
-     */
-
-    private boolean readyToTakeOff;
-
-    /**
      * Reference to the plane.
      */
 
     private final PlaneStub plane;
+
+    /**
+     * Reference to the departure airport.
+     */
+
+    private final DepartureAirportStub depAirport;
 
     /**
      * Reference to the destination airport.
@@ -58,13 +59,13 @@ public class Pilot extends Thread {
      * @param destAirport reference to the destination airport
      */
 
-    public Pilot(String name, int pilotId, PlaneStub plane, DestinationAirportStub destAirport) {
+    public Pilot(String name, int pilotId, PlaneStub plane, DestinationAirportStub destAirport, DepartureAirportStub depAirport) {
         super(name);
-        this.readyToTakeOff = false;
         this.pilotId = pilotId;
         pilotState = PilotStates.AT_TRANSFER_GATE;
         this.plane = plane;
         this.destAirport = destAirport;
+        this.depAirport = depAirport;
     }
 
     /**
@@ -103,26 +104,6 @@ public class Pilot extends Thread {
 
     public int getTransportedPassengers() {
         return transportedPassengers;
-    }
-
-    /**
-     * Set if hostess has informed the pilot that the plane is ready to take off.
-     *
-     * @param bool ready to take off
-     */
-
-    public void setReadyToTakeOff(boolean bool) {
-        readyToTakeOff = bool;
-    }
-
-    /**
-     * Get ready to take off
-     *
-     * @return True if ready to take off
-     */
-
-    public boolean getReadyToTakeOff() {
-        return readyToTakeOff;
     }
 
     /**
@@ -166,6 +147,13 @@ public class Pilot extends Thread {
                 endOp = true;
             }
         }
+
+        depAirport.shutdown();
+        depAirport.shutdown();
+        destAirport.shutdown();
+        destAirport.shutdown();
+        plane.shutdown();
+        plane.shutdown();
     }
 
     /**

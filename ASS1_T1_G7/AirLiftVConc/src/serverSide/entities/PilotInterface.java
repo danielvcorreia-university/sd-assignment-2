@@ -44,22 +44,6 @@ public interface PilotInterface {
     int getTransportedPassengers();
 
     /**
-     * Set if hostess has informed the pilot that the plane is ready to take off.
-     *
-     * @param bool ready to take off
-     */
-
-    void setReadyToTakeOff(boolean bool);
-
-    /**
-     * Get ready to take off
-     *
-     * @return True if ready to take off
-     */
-
-    boolean getReadyToTakeOff();
-
-    /**
      * Set pilot state.
      *
      * @param state new pilot state

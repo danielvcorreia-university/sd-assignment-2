@@ -4,6 +4,7 @@ import clientSide.stubs.DepartureAirportStub;
 import clientSide.stubs.DestinationAirportStub;
 import clientSide.stubs.PlaneStub;
 import clientSide.main.SimulPar;
+import genclass.GenericIO;
 
 /**
  *   Hostess thread.
@@ -45,12 +46,6 @@ public class Hostess extends Thread {
     private boolean passengerInQueue;
 
     /**
-     * True if the passenger has given his documents to the hostess for her to check.
-     */
-
-    private boolean readyToCheckDocuments;
-
-    /**
      * Reference to the departure airport.
      */
 
@@ -80,7 +75,6 @@ public class Hostess extends Thread {
 
     public Hostess(String name, int hostessId, DepartureAirportStub depAirport, PlaneStub plane, DestinationAirportStub destAirport) {
         super(name);
-        this.readyToCheckDocuments = false;
         this.hostessCount = 0;
         this.checkedPassengers = 0;
         this.hostessId = hostessId;
@@ -169,26 +163,6 @@ public class Hostess extends Thread {
     }
 
     /**
-     * Set if hostess has received the documents from the passenger.
-     *
-     * @param bool ready to check documents
-     */
-
-    public void setReadyToCheckDocuments(boolean bool) {
-        readyToCheckDocuments = bool;
-    }
-
-    /**
-     * Get ready to check documents.
-     *
-     * @return ready to check documents
-     */
-
-    public boolean getReadyToCheckDocuments() {
-        return readyToCheckDocuments;
-    }
-
-    /**
      * Set hostess state.
      *
      * @param state new hostess state
@@ -234,7 +208,6 @@ public class Hostess extends Thread {
                 }
             }
             plane.informPlaneReadyToTakeOff();
-
             plane.waitForNextFlight(false);
         }
     }
