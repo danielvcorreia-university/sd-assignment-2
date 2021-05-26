@@ -79,7 +79,7 @@ public class ServerCom
    {
       try
       { listeningSocket = new ServerSocket (serverPortNumb);
-          listeningSocket.setSoTimeout(10000);
+          listeningSocket.setSoTimeout(25000);
       }
       catch (BindException e)                              // fatal error --- port already in use
       { GenericIO.writelnString (Thread.currentThread ().getName () +
