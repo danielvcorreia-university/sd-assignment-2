@@ -25,7 +25,6 @@ public class PassengerMain {
 
         /* getting information about the servers locations */
 
-        String hostName = "localhost";                       // name of the platform where is located the pilot server
         int depAirportPortNumb = 22160;                      // number of the listening port at the computational system where the Departure Airport server is located
         int planePortNumb = 22161;                           // number of the listening port at the computational system where the Plane server is located
         int desAirportPortNumb = 22162;                      // number of the listening port at the computational system where the Destination Airport server is located
@@ -39,9 +38,9 @@ public class PassengerMain {
 
         /* problem initialization */
 
-        depAirport = new DepartureAirportStub(hostName, depAirportPortNumb);
-        plane = new PlaneStub(hostName, planePortNumb);
-        desAirport = new DestinationAirportStub(hostName, desAirportPortNumb);
+        depAirport = new DepartureAirportStub("sd104@l040101-ws01.ua.pt", depAirportPortNumb);
+        plane = new PlaneStub("sd104@l040101-ws02.ua.pt", planePortNumb);
+        desAirport = new DestinationAirportStub("sd104@l040101-ws03.ua.pt", desAirportPortNumb);
         for (int i = 0; i < SimulPar.N; i++) { passenger[i] = new Passenger("Passenger_" + (i + 1), i, depAirport, plane, desAirport); }
 
         /* start of the simulation */
