@@ -133,8 +133,9 @@ public class ServerCom
       scon = new ServerCom(serverPortNumb, listeningSocket);
       try
       { scon.commSocket = listeningSocket.accept();
-      }
-      catch (SocketException e)
+      } catch (SocketTimeoutException e) {
+          return null;
+      } catch (SocketException e)
       { GenericIO.writelnString (Thread.currentThread ().getName () +
                                  " - the listening socket was closed during the listening process!");
         e.printStackTrace ();
