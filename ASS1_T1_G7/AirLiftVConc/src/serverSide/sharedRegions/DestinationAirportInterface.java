@@ -1,7 +1,10 @@
 package serverSide.sharedRegions;
 
+import commInfra.AttributeTypes;
 import commInfra.Message;
 import commInfra.MessageType;
+import genclass.GenericIO;
+import serverSide.entities.PassengerInterface;
 import serverSide.main.DestinationAirportMain;
 
 /**
@@ -44,6 +47,25 @@ public class DestinationAirportInterface {
         Message outMessage = null;
 
         switch(inMessage.getType()) {
+            case MessageType.LEAVE_THE_PLANE:
+                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
+                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
+                { GenericIO.writelnString ("Invalid message! -> LEAVE_THE_PLANE"); System.exit(1); }
+                ((PassengerInterface) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
+                ((PassengerInterface) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
+                boolean lastPassenger;
+                lastPassenger = desAirport.leaveThePlane((int) inMessage.getParameters()[0]);
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setAttributesSize(2);
+                outMessage.setParametersSize(1);
+                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
+                outMessage.setParametersType(new int[]{AttributeTypes.BOOLEAN});
+                outMessage.setAttributes(new Object[]{((PassengerInterface) Thread.currentThread()).getPassengerState(),
+                        ((PassengerInterface) Thread.currentThread()).getPassengerId()});
+                outMessage.setParameters(new Object[]{lastPassenger});
+                break;
+
             case MessageType.SHUT:
                 DestinationAirportMain.endConnection();
                 outMessage = new Message(MessageType.SHUTDONE);

@@ -142,4 +142,16 @@ public class MessageType
      */
 
     public static final int SHUTDONE = 22;
+
+    /**
+     *  Get variable inF from plane.
+     */
+
+    public static final int GET_INF = 23;
+
+    /**
+     *  Last passenger notifies the pilot.
+     */
+
+    public static final int NOTIFY_PILOT = 24;
 }

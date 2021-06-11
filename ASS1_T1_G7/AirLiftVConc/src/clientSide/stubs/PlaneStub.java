@@ -43,6 +43,74 @@ public class PlaneStub {
     }
 
     /**
+     *  Operation get inF.
+     *
+     * It is called by the passenger before he leaves the plane at the destination airport
+     *
+     */
+
+    public int getInF() {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
+
+        com = new ClientCom (serverHostName, serverPortNumb);
+        while (!com.open ())    // waits for a connection to be established
+        { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+        }
+
+        outMessage = new Message(MessageType.GET_INF);
+        com.writeObject (outMessage);
+        inMessage = (Message) com.readObject ();
+
+        if (inMessage.getType() != MessageType.RETURN)
+        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+            GenericIO.writelnString (inMessage.toString ());
+            System.exit (1);
+        }
+
+        com.close ();
+
+        return ((int) inMessage.getParameters()[0]);
+    }
+
+    /**
+     *  Operation notify pilot.
+     *
+     * It is called by the last passenger that leaves the plane at destination airport
+     *
+     */
+
+    public void notifyPilot() {
+        ClientCom com;      // communication channel
+        Message outMessage, // outgoing message
+                inMessage;  // incoming message
+
+        com = new ClientCom (serverHostName, serverPortNumb);
+        while (!com.open ())    // waits for a connection to be established
+        { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+        }
+
+        outMessage = new Message(MessageType.NOTIFY_PILOT);
+        com.writeObject (outMessage);
+        inMessage = (Message) com.readObject ();
+
+        if (inMessage.getType() != MessageType.RETURN)
+        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+            GenericIO.writelnString (inMessage.toString ());
+            System.exit (1);
+        }
+
+        com.close ();
+    }
+
+    /**
      *  Operation final report.
      *
      * It is called by the pilot after he parks the plane at the transfer gate and there are no more passengers to transport
@@ -399,56 +467,6 @@ public class PlaneStub {
         com.close ();
         ((Pilot) Thread.currentThread ()).setPilotState ((int) inMessage.getAttributes()[0]);
         ((Pilot) Thread.currentThread ()).setTransportedPassengers ((int) inMessage.getAttributes()[1]);
-    }
-
-    /**
-     *  Operation leave the plane.
-     *
-     * It is called by the passengers when they leave the plane.
-     *
-     */
-
-    public void leaveThePlane() {
-        ClientCom com;      // communication channel
-        Message outMessage, // outgoing message
-                inMessage;  // incoming message
-
-        com = new ClientCom (serverHostName, serverPortNumb);
-        while (!com.open ())    // waits for a connection to be established
-        { try
-        { Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
-        }
-
-        outMessage = new Message(MessageType.LEAVE_THE_PLANE);
-        outMessage.setAttributesSize(2);
-        outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
-        outMessage.setAttributes(new Object[]{((Passenger) Thread.currentThread()).getPassengerState(),
-                ((Passenger) Thread.currentThread()).getPassengerId()});
-        com.writeObject (outMessage);
-        inMessage = (Message) com.readObject ();
-
-        if (inMessage.getType() != MessageType.RETURN)
-        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-            GenericIO.writelnString (inMessage.toString ());
-            System.exit (1);
-        }
-        if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
-        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid attribute size or type!");
-            GenericIO.writelnString (inMessage.toString ());
-            System.exit (1);
-        }
-        if (((int) inMessage.getAttributes()[0]) != PassengerStates.AT_DESTINATION)
-        { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger state after leaveThePlane!");
-            GenericIO.writelnString (inMessage.toString ());
-            System.exit (1);
-        }
-
-        com.close ();
-        ((Passenger) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
-        ((Passenger) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
     }
 
     /**

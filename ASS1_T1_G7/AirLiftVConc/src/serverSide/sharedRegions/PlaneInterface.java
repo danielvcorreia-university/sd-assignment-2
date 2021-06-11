@@ -49,6 +49,22 @@ public class PlaneInterface {
         Message outMessage = null;
 
         switch(inMessage.getType()) {
+            case MessageType.GET_INF:
+                int inF;
+                inF = plane.getInF();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                outMessage.setParametersSize(1);
+                outMessage.setParametersType(new int[]{AttributeTypes.INTEGER});
+                outMessage.setParameters(new Object[]{inF});
+                break;
+
+            case MessageType.NOTIFY_PILOT:
+                plane.notifyPilot();
+                // outMessage
+                outMessage = new Message(MessageType.RETURN);
+                break;
+
             case MessageType.FINAL_REPORT:
                 plane.reportFinalReport();
                 // outMessage
@@ -137,21 +153,6 @@ public class PlaneInterface {
                 outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
                 outMessage.setAttributes(new Object[]{((PilotInterface) Thread.currentThread()).getPilotState(),
                         ((PilotInterface) Thread.currentThread()).getTransportedPassengers()});
-                break;
-
-            case MessageType.LEAVE_THE_PLANE:
-                if ((inMessage.getAttributesSize() != 2 ) || (inMessage.getAttributesType()[0] != AttributeTypes.INTEGER)
-                        || (inMessage.getAttributesType()[1] != AttributeTypes.INTEGER))
-                    { GenericIO.writelnString ("Invalid message! -> LEAVE_THE_PLANE"); System.exit(1); }
-                ((PassengerInterface) Thread.currentThread ()).setPassengerState ((int) inMessage.getAttributes()[0]);
-                ((PassengerInterface) Thread.currentThread ()).setPassengerId ((int) inMessage.getAttributes()[1]);
-                plane.leaveThePlane();
-                // outMessage
-                outMessage = new Message(MessageType.RETURN);
-                outMessage.setAttributesSize(2);
-                outMessage.setAttributesType(new int[]{AttributeTypes.INTEGER, AttributeTypes.INTEGER});
-                outMessage.setAttributes(new Object[]{((PassengerInterface) Thread.currentThread()).getPassengerState(),
-                        ((PassengerInterface) Thread.currentThread()).getPassengerId()});
                 break;
 
             case MessageType.SHUT:
